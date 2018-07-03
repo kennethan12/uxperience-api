@@ -15,12 +15,13 @@ export class LoginController {
 
   @get("/login")
   async logIn(
-    @param.query.string("email") email: string
+    @param.query.string("email") email: string,
+    @param.query.string("password") password: string
   ): Promise<Array<User>> {
 
     return await this.userRepo.find({
       where: {
-        email
+        email, password
       }
     })
   }

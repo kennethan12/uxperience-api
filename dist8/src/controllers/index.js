@@ -7,4 +7,5 @@ __export(require("./ping.controller"));
 __export(require("./registration.controller"));
 __export(require("./login.controller"));
 __export(require("./users.controller"));
+__export(require("./product-list.controller"));
 //# sourceMappingURL=index.js.map

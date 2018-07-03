@@ -32,7 +32,12 @@ export class UxperienceApplication extends BootMixin(
     // Use below for an in-memory database
     let dataSourceConfig = new juggler.DataSource({
       name: "db",
-      connector: "memory"
+      connector: "loopback-connector-mysql",
+      host: 'localhost',
+      port: 3306,
+      database: 'project',
+      user: 'root',
+      password: ''
 
     });
     this.dataSource(dataSourceConfig);

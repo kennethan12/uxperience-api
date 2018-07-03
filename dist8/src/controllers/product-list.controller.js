@@ -13,33 +13,44 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const repository_1 = require("@loopback/repository");
-const user_repository_1 = require("../repositories/user.repository");
+const product_repository_1 = require("../repositories/product.repository");
 const rest_1 = require("@loopback/rest");
+const product_1 = require("../models/product");
 // Uncomment these imports to begin using these cool features!
 // import {inject} from '@loopback/context';
-let LoginController = class LoginController {
-    constructor(userRepo) {
-        this.userRepo = userRepo;
+let ProductListController = class ProductListController {
+    constructor(productRepo) {
+        this.productRepo = productRepo;
     }
-    async logIn(email, password) {
-        return await this.userRepo.find({
+    async createProduct(product) {
+        let createdProduct = await this.productRepo.create(product);
+        return createdProduct;
+    }
+    async findProduct(name) {
+        return await this.productRepo.find({
             where: {
-                email, password
+                name
             }
         });
     }
 };
 __decorate([
-    rest_1.get("/login"),
-    __param(0, rest_1.param.query.string("email")),
-    __param(1, rest_1.param.query.string("password")),
+    rest_1.post("/addproduct"),
+    __param(0, rest_1.requestBody()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, String]),
+    __metadata("design:paramtypes", [product_1.Product]),
     __metadata("design:returntype", Promise)
-], LoginController.prototype, "logIn", null);
-LoginController = __decorate([
-    __param(0, repository_1.repository(user_repository_1.UserRepository.name)),
-    __metadata("design:paramtypes", [user_repository_1.UserRepository])
-], LoginController);
-exports.LoginController = LoginController;
-//# sourceMappingURL=login.controller.js.map
+], ProductListController.prototype, "createProduct", null);
+__decorate([
+    rest_1.get("/product"),
+    __param(0, rest_1.param.query.string("name")),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], ProductListController.prototype, "findProduct", null);
+ProductListController = __decorate([
+    __param(0, repository_1.repository(product_repository_1.ProductRepository.name)),
+    __metadata("design:paramtypes", [product_repository_1.ProductRepository])
+], ProductListController);
+exports.ProductListController = ProductListController;
+//# sourceMappingURL=product-list.controller.js.map

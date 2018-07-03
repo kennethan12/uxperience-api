@@ -8,7 +8,7 @@ export class User extends Entity {
 
   @property({
     type: "number",
-    id: true
+    id: true // increment
   })
   userId: number;
 
@@ -28,9 +28,14 @@ export class User extends Entity {
   password: string;
 
   @property({
-    type: "number",
+    type: "string",
   })
-  phone: number;
+  phone: string;
+
+  @property({
+    type: "string"
+  })
+  photoUrl: "string"
 
   getUserId() {
     return this.userId;

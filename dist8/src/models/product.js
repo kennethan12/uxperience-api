@@ -10,9 +10,9 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const repository_1 = require("@loopback/repository");
-let User = class User extends repository_1.Entity {
-    getUserId() {
-        return this.userId;
+let Product = class Product extends repository_1.Entity {
+    getProductId() {
+        return this.productId;
     }
 };
 __decorate([
@@ -21,41 +21,53 @@ __decorate([
         id: true // increment
     }),
     __metadata("design:type", Number)
-], User.prototype, "userId", void 0);
+], Product.prototype, "productId", void 0);
 __decorate([
     repository_1.property({
         type: "string"
     }),
     __metadata("design:type", String)
-], User.prototype, "email", void 0);
+], Product.prototype, "name", void 0);
+__decorate([
+    repository_1.property({
+        type: "number"
+    }),
+    __metadata("design:type", Number)
+], Product.prototype, "price", void 0);
 __decorate([
     repository_1.property({
         type: "string"
     }),
     __metadata("design:type", String)
-], User.prototype, "name", void 0);
+], Product.prototype, "description", void 0);
 __decorate([
     repository_1.property({
         type: "string"
     }),
     __metadata("design:type", String)
-], User.prototype, "password", void 0);
+], Product.prototype, "date", void 0);
 __decorate([
     repository_1.property({
-        type: "string",
+        type: "number"
     }),
-    __metadata("design:type", String)
-], User.prototype, "phone", void 0);
+    __metadata("design:type", Number)
+], Product.prototype, "categoryId", void 0);
+__decorate([
+    repository_1.property({
+        type: "number"
+    }),
+    __metadata("design:type", Number)
+], Product.prototype, "locationId", void 0);
 __decorate([
     repository_1.property({
         type: "string"
     }),
     __metadata("design:type", String)
-], User.prototype, "photoUrl", void 0);
-User = __decorate([
+], Product.prototype, "photoUrl", void 0);
+Product = __decorate([
     repository_1.model({
-        name: "user"
+        name: 'product'
     })
-], User);
-exports.User = User;
-//# sourceMappingURL=user.js.map
+], Product);
+exports.Product = Product;
+//# sourceMappingURL=product.js.map

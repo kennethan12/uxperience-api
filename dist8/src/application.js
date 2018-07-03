@@ -24,7 +24,12 @@ class UxperienceApplication extends boot_1.BootMixin(repository_1.RepositoryMixi
         // Use below for an in-memory database
         let dataSourceConfig = new repository_1.juggler.DataSource({
             name: "db",
-            connector: "memory"
+            connector: "loopback-connector-mysql",
+            host: 'localhost',
+            port: 3306,
+            database: 'project',
+            user: 'root',
+            password: ''
         });
         this.dataSource(dataSourceConfig);
     }
