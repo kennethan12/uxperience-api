@@ -24,7 +24,7 @@ export class UsersController {
     @param.query.string("id") id: string): Promise<User[]> {
     return await this.userRepo.find({
       where: {
-        userId: id
+        user_id: id
       }
     });
   }

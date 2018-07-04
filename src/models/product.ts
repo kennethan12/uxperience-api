@@ -9,17 +9,17 @@ export class Product extends Entity {
     type: "number",
     id: true // increment
   })
-  productId: number;
-
-  @property({
-    type: "string"
-  })
-  name: string;
+  product_id: number;
 
   @property({
     type: "number"
   })
-  price: number;
+  provider_id: number;
+
+  @property({
+    type: 'string'
+  })
+  name: string
 
   @property({
     type: "string"
@@ -29,24 +29,9 @@ export class Product extends Entity {
   @property({
     type: "string"
   })
-  date: string;
-
-  @property({
-    type: "number"
-  })
-  categoryId: number;
-
-  @property({
-    type: "number"
-  })
-  locationId: number;
-
-  @property({
-    type: "string"
-  })
-  photoUrl: "string"
+  photo_url: "string"
 
   getProductId() {
-    return this.productId;
+    return this.product_id;
   }
 }

@@ -21,10 +21,5 @@ export class RegistrationController {
     let createdUser = await this.userRepo.create(user);
     return createdUser;
 
-    /*
-    pizza.status = "received";
-    return pizza;
-    */
-
   }
 }

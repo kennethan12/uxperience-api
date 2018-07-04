@@ -2,7 +2,7 @@ import { model, property, Entity } from "@loopback/repository";
 
 
 @model({
-  name: "user"
+  name: "user" // links to 'user' table in sql
 })
 export class User extends Entity {
 
@@ -10,7 +10,7 @@ export class User extends Entity {
     type: "number",
     id: true // increment
   })
-  userId: number;
+  user_id: number;
 
   @property({
     type: "string"
@@ -35,10 +35,10 @@ export class User extends Entity {
   @property({
     type: "string"
   })
-  photoUrl: "string"
+  photo_url: "string"
 
   getUserId() {
-    return this.userId;
+    return this.user_id;
   }
 
 }
