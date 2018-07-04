@@ -19,7 +19,7 @@ export class Location extends Entity {
   @property({
     type: 'string'
   })
-  city_name: string
+  city_name: string // city name
 
   @property({
     type: 'string'

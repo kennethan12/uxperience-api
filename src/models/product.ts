@@ -14,7 +14,7 @@ export class Product extends Entity {
   @property({
     type: "number"
   })
-  provider_id: number;
+  provider_id: number; // user id
 
   @property({
     type: 'string'

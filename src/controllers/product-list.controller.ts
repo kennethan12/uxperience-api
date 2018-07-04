@@ -35,4 +35,10 @@ export class ProductListController {
       }
     })
   }
+
+  @get("/allproducts")
+  async getAllUsers(): Promise<Array<Product>> {
+
+    return await this.productRepo.find();
+  }
 }

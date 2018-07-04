@@ -14,7 +14,7 @@ export class Menu extends Entity {
   @property({
     type: 'number'
   })
-  product_id: number
+  product_id: number // product id
 
   @property({
     type: 'DateTime'
@@ -27,7 +27,7 @@ export class Menu extends Entity {
   price: number
 
   @property({
-    type: 'binary'
+    type: 'boolean'
   })
   availability: boolean
 

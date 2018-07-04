@@ -23,6 +23,18 @@ export class LoginController {
       throw new HttpErrors.Unauthorized('Invalid email or password.')
     }
 
+    // Check that email and password are valid
+    let userExists: boolean = !!(await this.userRepo.count({
+      and: [
+        { email },
+        { password },
+      ],
+    }));
+
+    if (!userExists) {
+      throw new HttpErrors.Unauthorized('invalid credentials');
+    }
+
     return await this.userRepo.find({
       where: {
         email, password
