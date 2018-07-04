@@ -8,16 +8,16 @@ export class Company extends Entity {
   @property({
     type: 'number'
   })
-  owner_id: number // user id
+  owner_id: number; // user id
 
   @property({
     type: 'number'
   })
-  employee_id: number // user id
+  employee_id: number; // user id
 
   @property({
     type: 'number'
   })
-  role_id: number // role id
+  role_id: number; // role id
 
 }

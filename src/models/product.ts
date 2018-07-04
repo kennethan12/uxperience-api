@@ -19,7 +19,7 @@ export class Product extends Entity {
   @property({
     type: 'string'
   })
-  name: string
+  name: string;
 
   @property({
     type: "string"
@@ -27,9 +27,14 @@ export class Product extends Entity {
   description: string;
 
   @property({
+    type: 'number'
+  })
+  category_id: number;
+
+  @property({
     type: "string"
   })
-  photo_url: "string"
+  photo_url: string;
 
   getProductId() {
     return this.product_id;

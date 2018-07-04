@@ -9,32 +9,32 @@ export class Location extends Entity {
     type: 'number',
     id: true
   })
-  location_id: number
+  location_id: number;
 
   @property({
     type: 'string'
   })
-  address: number
+  address: number;
 
   @property({
     type: 'string'
   })
-  city_name: string // city name
+  city_name: string; // city name
 
   @property({
     type: 'string'
   })
-  state_province_region: string
+  state_province_region: string;
 
   @property({
     type: 'string'
   })
-  zip_number: string
+  zip_number: string;
 
   @property({
     type: 'string'
   })
-  country: string
+  country: string;
 
   getLocationId() {
     return this.location_id;

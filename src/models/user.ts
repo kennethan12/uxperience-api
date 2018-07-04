@@ -35,7 +35,7 @@ export class User extends Entity {
   @property({
     type: "string"
   })
-  photo_url: "string"
+  photo_url: string;
 
   getUserId() {
     return this.user_id;

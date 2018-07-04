@@ -9,27 +9,27 @@ export class Transaction extends Entity {
     type: 'number',
     id: true
   })
-  transaction_id: number
+  transaction_id: number;
 
   @property({
     type: 'number'
   })
-  customer_id: number // user id
+  customer_id: number; // user id
 
   @property({
     type: 'number'
   })
-  provider_id: number // user id
+  provider_id: number; // user id
 
   @property({
     type: 'number'
   })
-  menu_id: number // menu id
+  menu_id: number; // menu id
 
   @property({
     type: 'DateTime'
   })
-  date_sold: Date
+  date_sold: Date;
 
   getTransactionId() {
     return this.transaction_id;

@@ -9,12 +9,12 @@ export class Category extends Entity {
     type: 'number',
     id: true
   })
-  category_id: number
+  category_id: number;
 
   @property({
     type: 'string'
   })
-  name: string
+  name: string;
 
   getCategoryId() {
     return this.category_id;

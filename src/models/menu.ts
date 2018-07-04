@@ -9,27 +9,32 @@ export class Menu extends Entity {
     type: 'number',
     id: true
   })
-  menu_id: number
+  menu_id: number;
 
   @property({
     type: 'number'
   })
-  product_id: number // product id
+  product_id: number; // product id
 
   @property({
     type: 'DateTime'
   })
-  date_time: Date
+  date_time: Date;
 
   @property({
     type: 'number'
   })
-  price: number
+  price: number;
+
+  @property({
+    type: 'number'
+  })
+  location_id: number;
 
   @property({
     type: 'boolean'
   })
-  availability: boolean
+  availability: boolean;
 
   getMenuId() {
     return this.menu_id;

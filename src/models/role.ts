@@ -9,12 +9,12 @@ export class Role extends Entity {
     type: 'number',
     id: true
   })
-  role_id: number
+  role_id: number;
 
   @property({
     type: 'string'
   })
-  name: string
+  name: string;
 
   getRoleId() {
     return this.role_id;
