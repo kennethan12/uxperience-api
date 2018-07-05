@@ -54,6 +54,7 @@
     "@loopback/openapi-v3": "^0.10.12",
     "@loopback/repository": "^0.12.1",
     "@loopback/rest": "^0.15.1",
+    "db-migrate-mysql": "^1.1.10",
     "loopback-connector-mysql": "^5.2.0"
   },
   "devDependencies": {

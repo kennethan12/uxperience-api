@@ -35,7 +35,7 @@ export class UxperienceApplication extends BootMixin(
       connector: "loopback-connector-mysql",
       host: 'localhost',
       port: 3306,
-      database: 'project',
+      database: 'uxperience',
       user: 'root',
       password: ''
 
