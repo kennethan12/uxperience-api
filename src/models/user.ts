@@ -20,7 +20,12 @@ export class User extends Entity {
   @property({
     type: "string"
   })
-  name: string;
+  firstname: string;
+
+  @property({
+    type: "string"
+  })
+  lastname: string;
 
   @property({
     type: "string"

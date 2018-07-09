@@ -23,12 +23,38 @@ let RegistrationController = class RegistrationController {
         this.userRepo = userRepo;
     }
     async createUser(user) {
-        let createdUser = await this.userRepo.create(user);
-        return createdUser;
-        /*
-        pizza.status = "received";
-        return pizza;
-        */
+        if (!user.email || !user.password || !user.firstname || !user.lastname) {
+            throw new rest_1.HttpErrors.BadRequest('missing data');
+        }
+        // Check that user does not already exist
+        let userExists = !!(await this.userRepo.count({
+            and: [
+                { email: user.email }
+            ]
+        }));
+        if (userExists) {
+            throw new rest_1.HttpErrors.BadRequest('user already exists');
+        }
+        if (user.password === user.confirmPassword) {
+            let createdUser = await this.userRepo.create({
+                firstname: user.firstname,
+                lastname: user.lastname,
+                email: user.email,
+                phone: user.phone,
+                password: user.password
+            });
+            let createUser = {
+                id: createdUser.user_id,
+                email: createdUser.email,
+                firstname: createdUser.firstname,
+                lastname: createdUser.lastname,
+                phone: createdUser.phone
+            };
+            return createUser;
+        }
+        else {
+            throw new rest_1.HttpErrors.BadRequest('password does not match');
+        }
     }
 };
 __decorate([

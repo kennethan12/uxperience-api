@@ -5,4 +5,5 @@ export declare class ProductListController {
     constructor(productRepo: ProductRepository);
     createProduct(product: Product): Promise<Product>;
     findProduct(name: string): Promise<Array<Product>>;
+    getAllUsers(): Promise<Array<Product>>;
 }

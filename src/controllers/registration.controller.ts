@@ -16,20 +16,43 @@ export class RegistrationController {
   @post("/registration")
   async createUser(
     @requestBody() user: User
-  ): Promise<User> {
-    if (!user.email || !user.password) {
+  ) {
+    if (!user.email || !user.password || !user.firstname || !user.lastname) {
       throw new HttpErrors.BadRequest('missing data');
     }
 
     // Check that user does not already exist
-    let userExists: boolean = !!(await this.userRepo.count({ email: user.email }));
+    let userExists: boolean = !!(await this.userRepo.count({
+      and: [
+        { email: user.email }
+      ]
+    }));
 
     if (userExists) {
       throw new HttpErrors.BadRequest('user already exists');
     }
 
-    let createdUser = await this.userRepo.create(user);
-    return createdUser;
+    if (user.password === user.confirmPassword) {
+      let createdUser = await this.userRepo.create({
+        firstname: user.firstname,
+        lastname: user.lastname,
+        email: user.email,
+        phone: user.phone,
+        password: user.password
+      });
+
+      let createUser = {
+        id: createdUser.user_id,
+        email: createdUser.email,
+        firstname: createdUser.firstname,
+        lastname: createdUser.lastname,
+        phone: createdUser.phone
+      };
+
+      return createUser;
+    } else {
+      throw new HttpErrors.BadRequest('password does not match');
+    }
 
   }
 }

@@ -33,6 +33,9 @@ let ProductListController = class ProductListController {
             }
         });
     }
+    async getAllUsers() {
+        return await this.productRepo.find();
+    }
 };
 __decorate([
     rest_1.post("/addproduct"),
@@ -48,6 +51,12 @@ __decorate([
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)
 ], ProductListController.prototype, "findProduct", null);
+__decorate([
+    rest_1.get("/allproducts"),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], ProductListController.prototype, "getAllUsers", null);
 ProductListController = __decorate([
     __param(0, repository_1.repository(product_repository_1.ProductRepository.name)),
     __metadata("design:paramtypes", [product_repository_1.ProductRepository])

@@ -54,7 +54,9 @@
     "@loopback/openapi-v3": "^0.10.12",
     "@loopback/repository": "^0.12.1",
     "@loopback/rest": "^0.15.1",
+    "@types/jsonwebtoken": "^7.2.8",
     "db-migrate-mysql": "^1.1.10",
+    "jsonwebtoken": "^8.3.0",
     "loopback-connector-mysql": "^5.2.0"
   },
   "devDependencies": {

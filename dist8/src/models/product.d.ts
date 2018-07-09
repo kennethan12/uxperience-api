@@ -1,12 +1,10 @@
 import { Entity } from "@loopback/repository";
 export declare class Product extends Entity {
-    productId: number;
+    product_id: number;
+    provider_id: number;
     name: string;
-    price: number;
     description: string;
-    date: string;
-    categoryId: number;
-    locationId: number;
-    photoUrl: "string";
+    category_id: number;
+    photo_url: string;
     getProductId(): number;
 }

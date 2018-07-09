@@ -10,52 +10,28 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const repository_1 = require("@loopback/repository");
-let Product = class Product extends repository_1.Entity {
-    getProductId() {
-        return this.product_id;
+let Category = class Category extends repository_1.Entity {
+    getCategoryId() {
+        return this.category_id;
     }
 };
 __decorate([
     repository_1.property({
-        type: "number",
-        id: true // increment
+        type: 'number',
+        id: true
     }),
     __metadata("design:type", Number)
-], Product.prototype, "product_id", void 0);
-__decorate([
-    repository_1.property({
-        type: "number"
-    }),
-    __metadata("design:type", Number)
-], Product.prototype, "provider_id", void 0);
+], Category.prototype, "category_id", void 0);
 __decorate([
     repository_1.property({
         type: 'string'
     }),
     __metadata("design:type", String)
-], Product.prototype, "name", void 0);
-__decorate([
-    repository_1.property({
-        type: "string"
-    }),
-    __metadata("design:type", String)
-], Product.prototype, "description", void 0);
-__decorate([
-    repository_1.property({
-        type: 'number'
-    }),
-    __metadata("design:type", Number)
-], Product.prototype, "category_id", void 0);
-__decorate([
-    repository_1.property({
-        type: "string"
-    }),
-    __metadata("design:type", String)
-], Product.prototype, "photo_url", void 0);
-Product = __decorate([
+], Category.prototype, "name", void 0);
+Category = __decorate([
     repository_1.model({
-        name: 'product'
+        name: 'category'
     })
-], Product);
-exports.Product = Product;
-//# sourceMappingURL=product.js.map
+], Category);
+exports.Category = Category;
+//# sourceMappingURL=category.js.map

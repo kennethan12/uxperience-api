@@ -10,58 +10,52 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const repository_1 = require("@loopback/repository");
-let User = class User extends repository_1.Entity {
-    getUserId() {
-        return this.user_id;
+let Menu = class Menu extends repository_1.Entity {
+    getMenuId() {
+        return this.menu_id;
     }
 };
 __decorate([
     repository_1.property({
-        type: "number",
-        id: true // increment
+        type: 'number',
+        id: true
     }),
     __metadata("design:type", Number)
-], User.prototype, "user_id", void 0);
+], Menu.prototype, "menu_id", void 0);
 __decorate([
     repository_1.property({
-        type: "string"
+        type: 'number'
     }),
-    __metadata("design:type", String)
-], User.prototype, "email", void 0);
+    __metadata("design:type", Number)
+], Menu.prototype, "product_id", void 0);
 __decorate([
     repository_1.property({
-        type: "string"
+        type: 'DateTime'
     }),
-    __metadata("design:type", String)
-], User.prototype, "firstname", void 0);
+    __metadata("design:type", Date)
+], Menu.prototype, "date_time", void 0);
 __decorate([
     repository_1.property({
-        type: "string"
+        type: 'number'
     }),
-    __metadata("design:type", String)
-], User.prototype, "lastname", void 0);
+    __metadata("design:type", Number)
+], Menu.prototype, "price", void 0);
 __decorate([
     repository_1.property({
-        type: "string"
+        type: 'number'
     }),
-    __metadata("design:type", String)
-], User.prototype, "password", void 0);
+    __metadata("design:type", Number)
+], Menu.prototype, "location_id", void 0);
 __decorate([
     repository_1.property({
-        type: "string",
+        type: 'boolean'
     }),
-    __metadata("design:type", String)
-], User.prototype, "phone", void 0);
-__decorate([
-    repository_1.property({
-        type: "string"
-    }),
-    __metadata("design:type", String)
-], User.prototype, "photo_url", void 0);
-User = __decorate([
+    __metadata("design:type", Boolean)
+], Menu.prototype, "availability", void 0);
+Menu = __decorate([
     repository_1.model({
-        name: "user" // links to 'user' table in sql
+        name: 'menu'
     })
-], User);
-exports.User = User;
-//# sourceMappingURL=user.js.map
+], Menu);
+exports.Menu = Menu;
+//# sourceMappingURL=menu.js.map

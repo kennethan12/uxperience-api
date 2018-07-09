@@ -27,7 +27,7 @@ let UsersController = class UsersController {
     async getOneUser(id) {
         return await this.userRepo.find({
             where: {
-                userId: id
+                user_id: id
             }
         });
     }
