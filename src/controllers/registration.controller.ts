@@ -2,6 +2,7 @@ import { repository } from "@loopback/repository";
 import { UserRepository } from "../repositories/user.repository";
 import { User } from "../models/user";
 import { post, requestBody, HttpErrors } from "@loopback/rest";
+import * as bcrypt from 'bcrypt';
 
 // Uncomment these imports to begin using these cool features!
 
@@ -33,12 +34,15 @@ export class RegistrationController {
     }
 
     if (user.password === user.confirmPassword) {
+
+      let hashedPassword = await bcrypt.hash(user.password, 10);
+
       let createdUser = await this.userRepo.create({
         firstname: user.firstname,
         lastname: user.lastname,
         email: user.email,
         phone: user.phone,
-        password: user.password
+        password: hashedPassword
       });
 
       let createUser = {

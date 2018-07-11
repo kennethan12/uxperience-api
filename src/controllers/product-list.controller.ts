@@ -2,6 +2,8 @@ import { repository } from "@loopback/repository";
 import { ProductRepository } from "../repositories/product.repository";
 import { post, requestBody, get, param } from "@loopback/rest";
 import { Product } from "../models/product";
+import { MenuRepository } from "../repositories/menu.repository";
+import { Menu } from "../models/menu";
 
 // Uncomment these imports to begin using these cool features!
 
@@ -11,15 +13,21 @@ import { Product } from "../models/product";
 export class ProductListController {
 
   constructor(
-    @repository(ProductRepository.name) private productRepo: ProductRepository
+    @repository(ProductRepository.name) private productRepo: ProductRepository,
+    @repository(MenuRepository.name) private menuRepo: MenuRepository
   ) { }
 
   @post("/addproduct")
-  async createProduct(
-    @requestBody() product: Product
-  ): Promise<Product> {
+  async createProduct(@requestBody() product: Product, menu: Menu
+  ) {
 
-    let createdProduct = await this.productRepo.create(product);
+    let createdProduct = await this.productRepo.create({
+      name: product.name,
+      description: product.description,
+      price: menu.price,
+      date_time: menu.date_time,
+    });
+
     return createdProduct;
 
   }

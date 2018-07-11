@@ -17,6 +17,7 @@ const user_repository_1 = require("../repositories/user.repository");
 const rest_1 = require("@loopback/rest");
 const user_1 = require("../models/user");
 const jsonwebtoken_1 = require("jsonwebtoken");
+const bcrypt = require("bcrypt");
 // Uncomment these imports to begin using these cool features!
 // import {inject} from '@loopback/context';
 let LoginController = class LoginController {
@@ -41,8 +42,7 @@ let LoginController = class LoginController {
         // Check that email and password are valid
         let userExists = !!(await this.userRepo.count({
             and: [
-                { email: user.email },
-                { password: user.password },
+                { email: user.email }
             ],
         }));
         if (!userExists) {
@@ -51,12 +51,12 @@ let LoginController = class LoginController {
         ;
         let foundUser = await this.userRepo.findOne({
             where: {
-                and: [
-                    { email: user.email },
-                    { password: user.password }
-                ],
+                email: user.email
             },
         });
+        if (!(await bcrypt.compare(user.password, foundUser.password))) {
+            throw new rest_1.HttpErrors.Unauthorized('invalid credentials');
+        }
         let jwt = jsonwebtoken_1.sign({
             user: {
                 id: foundUser.user_id,

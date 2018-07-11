@@ -3,6 +3,7 @@ import { UserRepository } from "../repositories/user.repository";
 import { param, get, HttpErrors, post, requestBody } from "@loopback/rest";
 import { User } from "../models/user";
 import { sign, verify } from 'jsonwebtoken';
+import * as bcrypt from 'bcrypt';
 
 // Uncomment these imports to begin using these cool features!
 
@@ -27,6 +28,7 @@ export class LoginController {
 
   @post('/login')
   async loginUser(@requestBody() user: User) {
+
     // Check that email and password are both supplied
     if (!user.email || !user.password) {
       throw new HttpErrors.Unauthorized('invalid credentials');
@@ -35,8 +37,7 @@ export class LoginController {
     // Check that email and password are valid
     let userExists: boolean = !!(await this.userRepo.count({
       and: [
-        { email: user.email },
-        { password: user.password },
+        { email: user.email }
       ],
     }));
 
@@ -46,12 +47,13 @@ export class LoginController {
 
     let foundUser = await this.userRepo.findOne({
       where: {
-        and: [
-          { email: user.email },
-          { password: user.password }
-        ],
+        email: user.email
       },
     }) as User;
+
+    if (!(await bcrypt.compare(user.password, foundUser.password))) {
+      throw new HttpErrors.Unauthorized('invalid credentials');
+    }
 
     let jwt = sign({
       user: {

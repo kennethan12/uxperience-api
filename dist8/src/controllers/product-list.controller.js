@@ -16,14 +16,22 @@ const repository_1 = require("@loopback/repository");
 const product_repository_1 = require("../repositories/product.repository");
 const rest_1 = require("@loopback/rest");
 const product_1 = require("../models/product");
+const menu_repository_1 = require("../repositories/menu.repository");
+const menu_1 = require("../models/menu");
 // Uncomment these imports to begin using these cool features!
 // import {inject} from '@loopback/context';
 let ProductListController = class ProductListController {
-    constructor(productRepo) {
+    constructor(productRepo, menuRepo) {
         this.productRepo = productRepo;
+        this.menuRepo = menuRepo;
     }
-    async createProduct(product) {
-        let createdProduct = await this.productRepo.create(product);
+    async createProduct(product, menu) {
+        let createdProduct = await this.productRepo.create({
+            name: product.name,
+            description: product.description,
+            price: menu.price,
+            date_time: menu.date_time,
+        });
         return createdProduct;
     }
     async findProduct(name) {
@@ -41,7 +49,7 @@ __decorate([
     rest_1.post("/addproduct"),
     __param(0, rest_1.requestBody()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [product_1.Product]),
+    __metadata("design:paramtypes", [product_1.Product, menu_1.Menu]),
     __metadata("design:returntype", Promise)
 ], ProductListController.prototype, "createProduct", null);
 __decorate([
@@ -59,7 +67,9 @@ __decorate([
 ], ProductListController.prototype, "getAllUsers", null);
 ProductListController = __decorate([
     __param(0, repository_1.repository(product_repository_1.ProductRepository.name)),
-    __metadata("design:paramtypes", [product_repository_1.ProductRepository])
+    __param(1, repository_1.repository(menu_repository_1.MenuRepository.name)),
+    __metadata("design:paramtypes", [product_repository_1.ProductRepository,
+        menu_repository_1.MenuRepository])
 ], ProductListController);
 exports.ProductListController = ProductListController;
 //# sourceMappingURL=product-list.controller.js.map

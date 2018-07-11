@@ -16,6 +16,7 @@ const repository_1 = require("@loopback/repository");
 const user_repository_1 = require("../repositories/user.repository");
 const user_1 = require("../models/user");
 const rest_1 = require("@loopback/rest");
+const bcrypt = require("bcrypt");
 // Uncomment these imports to begin using these cool features!
 // import {inject} from '@loopback/context';
 let RegistrationController = class RegistrationController {
@@ -36,12 +37,13 @@ let RegistrationController = class RegistrationController {
             throw new rest_1.HttpErrors.BadRequest('user already exists');
         }
         if (user.password === user.confirmPassword) {
+            let hashedPassword = await bcrypt.hash(user.password, 10);
             let createdUser = await this.userRepo.create({
                 firstname: user.firstname,
                 lastname: user.lastname,
                 email: user.email,
                 phone: user.phone,
-                password: user.password
+                password: hashedPassword
             });
             let createUser = {
                 id: createdUser.user_id,
