@@ -30,9 +30,9 @@ __decorate([
 ], Menu.prototype, "product_id", void 0);
 __decorate([
     repository_1.property({
-        type: 'DateTime'
+        type: 'string'
     }),
-    __metadata("design:type", Date)
+    __metadata("design:type", String)
 ], Menu.prototype, "date_time", void 0);
 __decorate([
     repository_1.property({

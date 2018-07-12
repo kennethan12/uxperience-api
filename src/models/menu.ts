@@ -17,9 +17,9 @@ export class Menu extends Entity {
   product_id: number; // product id
 
   @property({
-    type: 'DateTime'
+    type: 'string'
   })
-  date_time: Date;
+  date_time: string;
 
   @property({
     type: 'number'

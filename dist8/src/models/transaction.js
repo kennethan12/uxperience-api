@@ -20,8 +20,20 @@ __decorate([
         type: 'number',
         id: true
     }),
-    __metadata("design:type", Number)
+    __metadata("design:type", String)
 ], Transaction.prototype, "transaction_id", void 0);
+__decorate([
+    repository_1.property({
+        type: 'string'
+    }),
+    __metadata("design:type", String)
+], Transaction.prototype, "stripe_charge_id", void 0);
+__decorate([
+    repository_1.property({
+        type: 'string'
+    }),
+    __metadata("design:type", String)
+], Transaction.prototype, "customer_token", void 0);
 __decorate([
     repository_1.property({
         type: 'number'
@@ -42,7 +54,7 @@ __decorate([
 ], Transaction.prototype, "menu_id", void 0);
 __decorate([
     repository_1.property({
-        type: 'DateTime'
+        type: 'string'
     }),
     __metadata("design:type", Date)
 ], Transaction.prototype, "date_sold", void 0);

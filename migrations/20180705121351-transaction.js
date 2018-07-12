@@ -18,9 +18,16 @@ exports.up = function (db, callback) {
 
   db.createTable('transaction', {
     transaction_id: {
-      type: 'int',
+      type: 'string',
       primaryKey: true,
-      autoIncrement: true
+    },
+    stripe_charge_id: {
+      type: 'string',
+      notNull: true
+    },
+    customer_token: {
+      type: 'string',
+      notNull: true
     },
     customer_id: {
       type: 'int',

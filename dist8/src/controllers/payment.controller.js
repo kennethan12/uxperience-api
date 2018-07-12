@@ -15,33 +15,64 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const transaction_repository_1 = require("../repositories/transaction.repository");
 const repository_1 = require("@loopback/repository");
 const rest_1 = require("@loopback/rest");
+const user_repository_1 = require("../repositories/user.repository");
+const menu_repository_1 = require("../repositories/menu.repository");
+const payment_request_1 = require("../models/payment-request");
+const product_repository_1 = require("../repositories/product.repository");
+const jsonwebtoken_1 = require("jsonwebtoken");
 // Uncomment these imports to begin using these cool features!
 // import {inject} from '@loopback/context';
 let PaymentController = class PaymentController {
-    constructor(transactionRepo) {
+    constructor(transactionRepo, userRepo, menuRepo, productRepo) {
         this.transactionRepo = transactionRepo;
+        this.userRepo = userRepo;
+        this.menuRepo = menuRepo;
+        this.productRepo = productRepo;
     }
-    async makePayment(transaction) {
+    async makePayment(jwt, paymentRequest) {
+        let user = null;
+        try {
+            let payload = jsonwebtoken_1.verify(jwt, 'shh');
+            user = payload.user;
+        }
+        catch (err) {
+            throw new rest_1.HttpErrors.Unauthorized("Invalid token");
+        }
+        // Use the product ID in the product repo to find the price
         let stripe = require("stripe")("sk_test_pzMWwDz7pwde0nT3Tjx3uxN4");
-        const charge = stripe.charges.create({
-            amount: 999,
-            currency: 'usd',
-            source: 'tok_visa',
-            receipt_email: 'jenny.rosen@example.com',
-        });
-        return charge;
+        try {
+            const charge = await stripe.charges.create({
+                source: paymentRequest.stripeToken,
+                currency: "usd",
+                amount: 100
+            });
+            // Create a Transaction in your Transaction Repo
+            // Return the transaction
+            return charge;
+        }
+        catch (e) {
+            console.log(e);
+            throw new rest_1.HttpErrors.BadRequest("Charge failed");
+        }
     }
 };
 __decorate([
-    rest_1.post('/transaction'),
-    __param(0, rest_1.requestBody()),
+    rest_1.post('/payments'),
+    __param(0, rest_1.param.query.string("jwt")),
+    __param(1, rest_1.requestBody()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
+    __metadata("design:paramtypes", [String, payment_request_1.PaymentRequest]),
     __metadata("design:returntype", Promise)
 ], PaymentController.prototype, "makePayment", null);
 PaymentController = __decorate([
     __param(0, repository_1.repository(transaction_repository_1.TransactionRepository.name)),
-    __metadata("design:paramtypes", [transaction_repository_1.TransactionRepository])
+    __param(1, repository_1.repository(user_repository_1.UserRepository.name)),
+    __param(2, repository_1.repository(menu_repository_1.MenuRepository.name)),
+    __param(3, repository_1.repository(product_repository_1.ProductRepository.name)),
+    __metadata("design:paramtypes", [transaction_repository_1.TransactionRepository,
+        user_repository_1.UserRepository,
+        menu_repository_1.MenuRepository,
+        product_repository_1.ProductRepository])
 ], PaymentController);
 exports.PaymentController = PaymentController;
 //# sourceMappingURL=payment.controller.js.map

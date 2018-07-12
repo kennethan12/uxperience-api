@@ -30,12 +30,6 @@ __decorate([
 ], Product.prototype, "provider_id", void 0);
 __decorate([
     repository_1.property({
-        type: 'number'
-    }),
-    __metadata("design:type", Number)
-], Product.prototype, "menu_id", void 0);
-__decorate([
-    repository_1.property({
         type: 'string'
     }),
     __metadata("design:type", String)

@@ -27,12 +27,12 @@ exports.up = function (db, callback) {
       notNull: true,
       foreignKey: {
         name: 'product_id_menu_fk',
-        table: 'user',
+        table: 'product',
         rules: {
           onDelete: 'RESTRICT',
           onUpdate: 'RESTRICT'
         },
-        mapping: 'user_id'
+        mapping: 'product_id'
       }
     },
     date_time: {
@@ -44,8 +44,7 @@ exports.up = function (db, callback) {
       notNull: true
     },
     location_id: {
-      type: 'int',
-      notNull: true
+      type: 'int'
     },
     availability: {
       type: 'boolean',

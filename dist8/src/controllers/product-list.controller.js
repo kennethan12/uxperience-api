@@ -15,9 +15,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const repository_1 = require("@loopback/repository");
 const product_repository_1 = require("../repositories/product.repository");
 const rest_1 = require("@loopback/rest");
-const product_1 = require("../models/product");
 const menu_repository_1 = require("../repositories/menu.repository");
 const menu_1 = require("../models/menu");
+const jsonwebtoken_1 = require("jsonwebtoken");
 // Uncomment these imports to begin using these cool features!
 // import {inject} from '@loopback/context';
 let ProductListController = class ProductListController {
@@ -25,14 +25,27 @@ let ProductListController = class ProductListController {
         this.productRepo = productRepo;
         this.menuRepo = menuRepo;
     }
-    async createProduct(product, menu) {
+    async createProduct(jwt, productName, productDescription, menu) {
+        let user = null;
+        try {
+            let payload = jsonwebtoken_1.verify(jwt, 'shh');
+            user = payload.user;
+        }
+        catch (err) {
+            throw new rest_1.HttpErrors.Unauthorized("Invalid token");
+        }
         let createdProduct = await this.productRepo.create({
-            name: product.name,
-            description: product.description,
+            name: productName,
+            description: productDescription,
+            provider_id: user.id
+        });
+        let createdMenu = await this.menuRepo.create({
             price: menu.price,
             date_time: menu.date_time,
+            product_id: createdProduct.product_id,
+            availability: true
         });
-        return createdProduct;
+        return createdMenu;
     }
     async findProduct(name) {
         return await this.productRepo.find({
@@ -47,9 +60,12 @@ let ProductListController = class ProductListController {
 };
 __decorate([
     rest_1.post("/addproduct"),
-    __param(0, rest_1.requestBody()),
+    __param(0, rest_1.param.query.string("jwt")),
+    __param(1, rest_1.param.query.string("productName")),
+    __param(2, rest_1.param.query.string("productDescription")),
+    __param(3, rest_1.requestBody()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [product_1.Product, menu_1.Menu]),
+    __metadata("design:paramtypes", [String, String, String, menu_1.Menu]),
     __metadata("design:returntype", Promise)
 ], ProductListController.prototype, "createProduct", null);
 __decorate([
