@@ -52,31 +52,7 @@ export class ProductListController {
       menu: createdMenu,
       product: createdProduct
     };
-
   }
-
-  // @get("/access_product")
-  // async accessProduct(
-  //   @param.query.string("product_id") product_id: number
-  // ) {
-
-  //   let findProduct = await this.productRepo.findOne({
-  //     where: {
-  //       product_id
-  //     }
-  //   }) as Product
-
-  //   let findMenu = await this.menuRepo.findOne({
-  //     where: {
-  //       product_id: findProduct.product_id
-  //     }
-  //   }) as Menu
-
-  //   return {
-  //     findProduct,
-  //     findMenu
-  //   }
-  // }
 
   @get("/allproducts")
   async getAllProducts(): Promise<Array<Product>> {
