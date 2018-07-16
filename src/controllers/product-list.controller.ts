@@ -15,7 +15,7 @@ export class ProductListController {
 
   constructor(
     @repository(ProductRepository.name) private productRepo: ProductRepository,
-    @repository(MenuRepository.name) private menuRepo: MenuRepository
+    @repository(MenuRepository.name) private menuRepo: MenuRepository,
   ) { }
 
   @post("/addproduct")
@@ -44,7 +44,9 @@ export class ProductListController {
       date_time: menu.date_time,
       product_id: createdProduct.product_id,
       availability: true
-    })
+    }) as Menu;
+
+
 
     return createdMenu;
 

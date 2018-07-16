@@ -14,7 +14,12 @@ export class UxperienceApplication extends BootMixin(
   RepositoryMixin(RestApplication)
 ) {
   constructor(options?: ApplicationConfig) {
-    super(options);
+    super({
+
+      rest: {
+        port: process.env.PORT || 3000
+      }
+    });
 
     this.sequence(MySequence);
 
@@ -35,7 +40,7 @@ export class UxperienceApplication extends BootMixin(
       connector: "loopback-connector-mysql",
       host: 'localhost',
       port: 3306,
-      database: 'uxperience',
+      database: 'localhost-api',
       user: 'root',
       password: ''
 
