@@ -41,21 +41,46 @@ let ProductListController = class ProductListController {
         });
         let createdMenu = await this.menuRepo.create({
             price: menu.price,
-            date_time: menu.date_time,
+            date: menu.date,
+            time: menu.time,
             product_id: createdProduct.product_id,
             availability: true
         });
-        return createdMenu;
+        return {
+            menu: createdMenu,
+            product: createdProduct
+        };
     }
-    async findProduct(name) {
-        return await this.productRepo.find({
+    // @get("/access_product")
+    // async accessProduct(
+    //   @param.query.string("product_id") product_id: number
+    // ) {
+    //   let findProduct = await this.productRepo.findOne({
+    //     where: {
+    //       product_id
+    //     }
+    //   }) as Product
+    //   let findMenu = await this.menuRepo.findOne({
+    //     where: {
+    //       product_id: findProduct.product_id
+    //     }
+    //   }) as Menu
+    //   return {
+    //     findProduct,
+    //     findMenu
+    //   }
+    // }
+    async getAllProducts() {
+        return await this.productRepo.find();
+    }
+    async getMenuItems(product_id) {
+        let findMenuItems = this.menuRepo.find({
             where: {
-                name
+                product_id,
+                availability: true
             }
         });
-    }
-    async getAllUsers() {
-        return await this.productRepo.find();
+        return findMenuItems;
     }
 };
 __decorate([
@@ -69,18 +94,18 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], ProductListController.prototype, "createProduct", null);
 __decorate([
-    rest_1.get("/product"),
-    __param(0, rest_1.param.query.string("name")),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
-    __metadata("design:returntype", Promise)
-], ProductListController.prototype, "findProduct", null);
-__decorate([
     rest_1.get("/allproducts"),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
-], ProductListController.prototype, "getAllUsers", null);
+], ProductListController.prototype, "getAllProducts", null);
+__decorate([
+    rest_1.get('/menuinfo'),
+    __param(0, rest_1.param.query.number('product_id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number]),
+    __metadata("design:returntype", Promise)
+], ProductListController.prototype, "getMenuItems", null);
 ProductListController = __decorate([
     __param(0, repository_1.repository(product_repository_1.ProductRepository.name)),
     __param(1, repository_1.repository(menu_repository_1.MenuRepository.name)),

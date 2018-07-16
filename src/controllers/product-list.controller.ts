@@ -26,6 +26,7 @@ export class ProductListController {
     @requestBody() menu: Menu
   ) {
     let user = null;
+
     try {
       let payload = verify(jwt, 'shh') as any;
       user = payload.user;
@@ -41,30 +42,60 @@ export class ProductListController {
 
     let createdMenu = await this.menuRepo.create({
       price: menu.price,
-      date_time: menu.date_time,
+      date: menu.date,
+      time: menu.time,
       product_id: createdProduct.product_id,
       availability: true
     })
 
-    return createdMenu;
+    return {
+      menu: createdMenu,
+      product: createdProduct
+    };
 
   }
 
-  @get("/product")
-  async findProduct(
-    @param.query.string("name") name: string
-  ): Promise<Array<Product>> {
+  // @get("/access_product")
+  // async accessProduct(
+  //   @param.query.string("product_id") product_id: number
+  // ) {
 
-    return await this.productRepo.find({
-      where: {
-        name
-      }
-    })
-  }
+  //   let findProduct = await this.productRepo.findOne({
+  //     where: {
+  //       product_id
+  //     }
+  //   }) as Product
+
+  //   let findMenu = await this.menuRepo.findOne({
+  //     where: {
+  //       product_id: findProduct.product_id
+  //     }
+  //   }) as Menu
+
+  //   return {
+  //     findProduct,
+  //     findMenu
+  //   }
+  // }
 
   @get("/allproducts")
-  async getAllUsers(): Promise<Array<Product>> {
+  async getAllProducts(): Promise<Array<Product>> {
 
     return await this.productRepo.find();
+  }
+
+  @get('/menuinfo')
+  async getMenuItems(
+    @param.query.number('product_id') product_id: number
+  ): Promise<Array<Menu>> {
+
+    let findMenuItems = this.menuRepo.find({
+      where: {
+        product_id,
+        availability: true
+      }
+    })
+
+    return findMenuItems;
   }
 }

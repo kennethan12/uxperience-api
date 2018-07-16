@@ -35,8 +35,12 @@ exports.up = function (db, callback) {
         mapping: 'product_id'
       }
     },
-    date_time: {
-      type: 'DateTime',
+    date: {
+      type: 'string',
+      notNull: true
+    },
+    time: {
+      type: 'string',
       notNull: true
     },
     price: {

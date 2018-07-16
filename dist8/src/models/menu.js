@@ -33,7 +33,13 @@ __decorate([
         type: 'string'
     }),
     __metadata("design:type", String)
-], Menu.prototype, "date_time", void 0);
+], Menu.prototype, "date", void 0);
+__decorate([
+    repository_1.property({
+        type: 'string'
+    }),
+    __metadata("design:type", String)
+], Menu.prototype, "time", void 0);
 __decorate([
     repository_1.property({
         type: 'number'

@@ -29,7 +29,7 @@ let PaymentController = class PaymentController {
         this.menuRepo = menuRepo;
         this.productRepo = productRepo;
     }
-    async makePayment(jwt, paymentRequest) {
+    async makePayment(jwt, menu_id, paymentRequest) {
         let user = null;
         try {
             let payload = jsonwebtoken_1.verify(jwt, 'shh');
@@ -40,11 +40,16 @@ let PaymentController = class PaymentController {
         }
         // Use the product ID in the product repo to find the price
         let stripe = require("stripe")("sk_test_pzMWwDz7pwde0nT3Tjx3uxN4");
+        let foundMenu = this.menuRepo.findOne({
+            where: {
+                menu_id
+            }
+        });
         try {
             const charge = await stripe.charges.create({
                 source: paymentRequest.stripeToken,
                 currency: "usd",
-                amount: 100
+                amount: foundMenu
             });
             // Create a Transaction in your Transaction Repo
             // Return the transaction
@@ -59,9 +64,10 @@ let PaymentController = class PaymentController {
 __decorate([
     rest_1.post('/payments'),
     __param(0, rest_1.param.query.string("jwt")),
-    __param(1, rest_1.requestBody()),
+    __param(1, rest_1.param.query.string("menu_id")),
+    __param(2, rest_1.requestBody()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, payment_request_1.PaymentRequest]),
+    __metadata("design:paramtypes", [String, Number, payment_request_1.PaymentRequest]),
     __metadata("design:returntype", Promise)
 ], PaymentController.prototype, "makePayment", null);
 PaymentController = __decorate([

@@ -19,7 +19,12 @@ export class Menu extends Entity {
   @property({
     type: 'string'
   })
-  date_time: string;
+  date: string;
+
+  @property({
+    type: 'string'
+  })
+  time: string;
 
   @property({
     type: 'number'
