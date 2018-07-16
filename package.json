@@ -32,7 +32,7 @@
     "prestart": "npm run build:current",
     "start": "node .",
     "prepublishOnly": "npm run test",
-    "live": "node ."
+    "live": "db-migrate up && node ."
   },
   "repository": {
     "type": "git"
@@ -60,6 +60,7 @@
     "@types/jsonwebtoken": "^7.2.8",
     "bcrypt": "^3.0.0",
     "bcryptjs": "^2.4.3",
+    "db-migrate": "^0.11.1",
     "db-migrate-mysql": "^1.1.10",
     "jsonwebtoken": "^8.3.0",
     "loopback-connector-mysql": "^5.2.0",
