@@ -1,7 +1,8 @@
 import { repository } from "@loopback/repository";
 import { UserRepository } from "../repositories/user.repository";
-import { get, param } from "@loopback/rest";
+import { get, param, HttpErrors } from "@loopback/rest";
 import { User } from "../models/user";
+import { verify } from "jsonwebtoken";
 
 // Uncomment these imports to begin using these cool features!
 
@@ -19,13 +20,28 @@ export class UsersController {
     return await this.userRepo.find();
   }
 
-  @get('/user/{id}')
+  @get('/user')
   async getOneUser(
-    @param.query.string("id") id: string): Promise<User[]> {
-    return await this.userRepo.find({
-      where: {
-        user_id: id
-      }
-    });
+    @param.query.string("jwt") jwt: string
+  ) {
+
+    let user = null;
+    try {
+      let payload = verify(jwt, 'shh') as any;
+      user = payload.user;
+    } catch (err) {
+      throw new HttpErrors.Unauthorized("Invalid token")
+    }
+
+    return await this.userRepo.findById(user.id);
+  }
+
+  @get('/producthost')
+  async getHost(
+    @param.query.number('provider_id') provider_id: string
+  ) {
+
+    let foundHost = await this.userRepo.findById(provider_id);
+    return foundHost
   }
 }

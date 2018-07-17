@@ -6,11 +6,20 @@ export declare class ProductListController {
     private productRepo;
     private menuRepo;
     constructor(productRepo: ProductRepository, menuRepo: MenuRepository);
-    createProduct(jwt: string, productName: string, productDescription: string, city: string, menu: Menu): Promise<{
-        menu: Menu;
-        product: Product;
-    }>;
+  
     getAllProducts(): Promise<Array<Product>>;
+
     getMenuItems(product_id: number): Promise<Array<Menu>>;
+
     getProductByLocation(locationName: string): Promise<Array<Product>>;
+
+    createProduct(jwt: string, product: Product): Promise<Product>;
+
+    createMenu(product_id: number, menu: Menu): Promise<Menu>;
+
+    getAllMenuItems(product_id: number): Promise<Array<Menu>>;
+
+    getOneMenu(menu_id: number): Promise<Menu>;
+    
+    getOneProduct(product_id: number): Promise<Product>;
 }
