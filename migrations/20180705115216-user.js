@@ -24,7 +24,8 @@ exports.up = function (db, callback) {
     },
     email: {
       type: 'string',
-      notNull: true
+      notNull: true,
+      unique: true
     },
     firstname: {
       type: 'string',
