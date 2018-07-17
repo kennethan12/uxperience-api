@@ -26,11 +26,7 @@ let ProductListController = class ProductListController {
         this.productRepo = productRepo;
         this.menuRepo = menuRepo;
     }
-<<<<<<< HEAD
-    async createProduct(jwt, productName, productDescription, city, menu) {
-=======
     async createProduct(jwt, product) {
->>>>>>> 48f7f65928cd9444d29cab8b16560045b72e746f
         let user = null;
         try {
             let payload = jsonwebtoken_1.verify(jwt, 'shh');
@@ -40,16 +36,10 @@ let ProductListController = class ProductListController {
             throw new rest_1.HttpErrors.Unauthorized("Invalid token");
         }
         let createdProduct = await this.productRepo.create({
-<<<<<<< HEAD
-            name: productName,
-            description: productDescription,
-            provider_id: user.id,
-            city: city
-=======
             name: product.name,
             description: product.description,
-            provider_id: user.id
->>>>>>> 48f7f65928cd9444d29cab8b16560045b72e746f
+            provider_id: user.id,
+            city: product.city
         });
         return createdProduct;
     }
@@ -76,7 +66,6 @@ let ProductListController = class ProductListController {
         });
         return findMenuItems;
     }
-<<<<<<< HEAD
     //NEW
     async getProductByLocation(locationName) {
         return await this.productRepo.find({
@@ -84,7 +73,7 @@ let ProductListController = class ProductListController {
                 city: locationName
             }
         });
-=======
+    }
     async getOneMenu(menu_id) {
         let findMenu = await this.menuRepo.findById(menu_id);
         return findMenu;
@@ -92,24 +81,14 @@ let ProductListController = class ProductListController {
     async getOneProduct(product_id) {
         let foundProduct = await this.productRepo.findById(product_id);
         return foundProduct;
->>>>>>> 48f7f65928cd9444d29cab8b16560045b72e746f
     }
 };
 __decorate([
     rest_1.post("/addproduct"),
     __param(0, rest_1.param.query.string("jwt")),
-<<<<<<< HEAD
-    __param(1, rest_1.param.query.string("productName")),
-    __param(2, rest_1.param.query.string("productDescription")),
-    __param(3, rest_1.param.query.string("city")),
-    __param(4, rest_1.requestBody()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, String, String, String, menu_1.Menu]),
-=======
     __param(1, rest_1.requestBody()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String, product_1.Product]),
->>>>>>> 48f7f65928cd9444d29cab8b16560045b72e746f
     __metadata("design:returntype", Promise)
 ], ProductListController.prototype, "createProduct", null);
 __decorate([
@@ -134,6 +113,13 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], ProductListController.prototype, "getAllMenuItems", null);
 __decorate([
+    rest_1.get("/productbylocation"),
+    __param(0, rest_1.param.query.string("city")),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], ProductListController.prototype, "getProductByLocation", null);
+__decorate([
     rest_1.get('/menuinfo'),
     __param(0, rest_1.param.query.number('menu_id')),
     __metadata("design:type", Function),
@@ -146,18 +132,7 @@ __decorate([
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", Promise)
-<<<<<<< HEAD
-], ProductListController.prototype, "getMenuItems", null);
-__decorate([
-    rest_1.get("/productbylocation"),
-    __param(0, rest_1.param.query.string("city")),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
-    __metadata("design:returntype", Promise)
-], ProductListController.prototype, "getProductByLocation", null);
-=======
 ], ProductListController.prototype, "getOneProduct", null);
->>>>>>> 48f7f65928cd9444d29cab8b16560045b72e746f
 ProductListController = __decorate([
     __param(0, repository_1.repository(product_repository_1.ProductRepository.name)),
     __param(1, repository_1.repository(menu_repository_1.MenuRepository.name)),

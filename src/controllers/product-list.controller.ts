@@ -82,7 +82,6 @@ export class ProductListController {
     return findMenuItems;
   }
 
-<<<<<<< HEAD
 
   //NEW
   @get("/productbylocation")
@@ -104,14 +103,6 @@ export class ProductListController {
 
 
 
-
-
-
-
-
-
-
-=======
   @get('/menuinfo')
   async getOneMenu(
     @param.query.number('menu_id') menu_id: number
@@ -129,5 +120,4 @@ export class ProductListController {
     let foundProduct = await this.productRepo.findById(product_id);
     return foundProduct;
   }
->>>>>>> 48f7f65928cd9444d29cab8b16560045b72e746f
 }
