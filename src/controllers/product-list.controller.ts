@@ -15,7 +15,7 @@ export class ProductListController {
 
   constructor(
     @repository(ProductRepository.name) private productRepo: ProductRepository,
-    @repository(MenuRepository.name) private menuRepo: MenuRepository,
+    @repository(MenuRepository.name) private menuRepo: MenuRepository
   ) { }
 
   @post("/addproduct")
@@ -23,9 +23,11 @@ export class ProductListController {
     @param.query.string("jwt") jwt: string,
     @param.query.string("productName") productName: string,
     @param.query.string("productDescription") productDescription: string,
+    @param.query.string("city") city: string,
     @requestBody() menu: Menu
   ) {
     let user = null;
+
     try {
       let payload = verify(jwt, 'shh') as any;
       user = payload.user;
@@ -36,37 +38,71 @@ export class ProductListController {
     let createdProduct = await this.productRepo.create({
       name: productName,
       description: productDescription,
-      provider_id: user.id
+      provider_id: user.id,
+      city: city
     });
 
     let createdMenu = await this.menuRepo.create({
       price: menu.price,
-      date_time: menu.date_time,
+      date: menu.date,
+      time: menu.time,
       product_id: createdProduct.product_id,
       availability: true
-    }) as Menu;
-
-
-
-    return createdMenu;
-
-  }
-
-  @get("/product")
-  async findProduct(
-    @param.query.string("name") name: string
-  ): Promise<Array<Product>> {
-
-    return await this.productRepo.find({
-      where: {
-        name
-      }
     })
+
+    return {
+      menu: createdMenu,
+      product: createdProduct
+    };
   }
 
   @get("/allproducts")
-  async getAllUsers(): Promise<Array<Product>> {
+  async getAllProducts(): Promise<Array<Product>> {
 
     return await this.productRepo.find();
   }
+
+  @get('/menuinfo')
+  async getMenuItems(
+    @param.query.number('product_id') product_id: number
+  ): Promise<Array<Menu>> {
+
+    let findMenuItems = this.menuRepo.find({
+      where: {
+        product_id,
+        availability: true
+      }
+    })
+
+    return findMenuItems;
+  }
+
+
+  //NEW
+  @get("/productbylocation")
+  async getProductByLocation(
+
+    @param.query.string("city") locationName: string
+
+  ): Promise<Array<Product>> {
+
+    return await this.productRepo.find({
+
+      where: {
+        city: locationName
+      }
+
+    });
+  }
+
+
+
+
+
+
+
+
+
+
+
 }

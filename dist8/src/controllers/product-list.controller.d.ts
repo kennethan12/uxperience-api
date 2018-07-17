@@ -6,7 +6,11 @@ export declare class ProductListController {
     private productRepo;
     private menuRepo;
     constructor(productRepo: ProductRepository, menuRepo: MenuRepository);
-    createProduct(jwt: string, productName: string, productDescription: string, menu: Menu): Promise<Menu>;
-    findProduct(name: string): Promise<Array<Product>>;
-    getAllUsers(): Promise<Array<Product>>;
+    createProduct(jwt: string, productName: string, productDescription: string, city: string, menu: Menu): Promise<{
+        menu: Menu;
+        product: Product;
+    }>;
+    getAllProducts(): Promise<Array<Product>>;
+    getMenuItems(product_id: number): Promise<Array<Menu>>;
+    getProductByLocation(locationName: string): Promise<Array<Product>>;
 }

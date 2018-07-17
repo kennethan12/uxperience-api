@@ -28,6 +28,7 @@ export class PaymentController {
   @post('/payments')
   async makePayment(
     @param.query.string("jwt") jwt: string,
+    @param.query.string("menu_id") menu_id: number,
     @requestBody() paymentRequest: PaymentRequest
   ) {
 
@@ -43,11 +44,17 @@ export class PaymentController {
 
     let stripe = require("stripe")("sk_test_pzMWwDz7pwde0nT3Tjx3uxN4");
 
+    let foundMenu = this.menuRepo.findOne({
+      where: {
+        menu_id
+      }
+    });
+
     try {
       const charge = await stripe.charges.create({
         source: paymentRequest.stripeToken,
         currency: "usd",
-        amount: 100
+        amount: foundMenu
       });
 
       // Create a Transaction in your Transaction Repo

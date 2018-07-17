@@ -25,7 +25,7 @@ let ProductListController = class ProductListController {
         this.productRepo = productRepo;
         this.menuRepo = menuRepo;
     }
-    async createProduct(jwt, productName, productDescription, menu) {
+    async createProduct(jwt, productName, productDescription, city, menu) {
         let user = null;
         try {
             let payload = jsonwebtoken_1.verify(jwt, 'shh');
@@ -37,25 +37,40 @@ let ProductListController = class ProductListController {
         let createdProduct = await this.productRepo.create({
             name: productName,
             description: productDescription,
-            provider_id: user.id
+            provider_id: user.id,
+            city: city
         });
         let createdMenu = await this.menuRepo.create({
             price: menu.price,
-            date_time: menu.date_time,
+            date: menu.date,
+            time: menu.time,
             product_id: createdProduct.product_id,
             availability: true
         });
-        return createdMenu;
+        return {
+            menu: createdMenu,
+            product: createdProduct
+        };
     }
-    async findProduct(name) {
-        return await this.productRepo.find({
+    async getAllProducts() {
+        return await this.productRepo.find();
+    }
+    async getMenuItems(product_id) {
+        let findMenuItems = this.menuRepo.find({
             where: {
-                name
+                product_id,
+                availability: true
             }
         });
+        return findMenuItems;
     }
-    async getAllUsers() {
-        return await this.productRepo.find();
+    //NEW
+    async getProductByLocation(locationName) {
+        return await this.productRepo.find({
+            where: {
+                city: locationName
+            }
+        });
     }
 };
 __decorate([
@@ -63,24 +78,32 @@ __decorate([
     __param(0, rest_1.param.query.string("jwt")),
     __param(1, rest_1.param.query.string("productName")),
     __param(2, rest_1.param.query.string("productDescription")),
-    __param(3, rest_1.requestBody()),
+    __param(3, rest_1.param.query.string("city")),
+    __param(4, rest_1.requestBody()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, String, String, menu_1.Menu]),
+    __metadata("design:paramtypes", [String, String, String, String, menu_1.Menu]),
     __metadata("design:returntype", Promise)
 ], ProductListController.prototype, "createProduct", null);
-__decorate([
-    rest_1.get("/product"),
-    __param(0, rest_1.param.query.string("name")),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
-    __metadata("design:returntype", Promise)
-], ProductListController.prototype, "findProduct", null);
 __decorate([
     rest_1.get("/allproducts"),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
-], ProductListController.prototype, "getAllUsers", null);
+], ProductListController.prototype, "getAllProducts", null);
+__decorate([
+    rest_1.get('/menuinfo'),
+    __param(0, rest_1.param.query.number('product_id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number]),
+    __metadata("design:returntype", Promise)
+], ProductListController.prototype, "getMenuItems", null);
+__decorate([
+    rest_1.get("/productbylocation"),
+    __param(0, rest_1.param.query.string("city")),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], ProductListController.prototype, "getProductByLocation", null);
 ProductListController = __decorate([
     __param(0, repository_1.repository(product_repository_1.ProductRepository.name)),
     __param(1, repository_1.repository(menu_repository_1.MenuRepository.name)),
