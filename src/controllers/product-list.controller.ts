@@ -21,9 +21,7 @@ export class ProductListController {
   @post("/addproduct")
   async createProduct(
     @param.query.string("jwt") jwt: string,
-    @param.query.string("productName") productName: string,
-    @param.query.string("productDescription") productDescription: string,
-    @requestBody() menu: Menu
+    @requestBody() product: Product
   ) {
     let user = null;
 
@@ -35,23 +33,31 @@ export class ProductListController {
     }
 
     let createdProduct = await this.productRepo.create({
-      name: productName,
-      description: productDescription,
+      name: product.name,
+      description: product.description,
       provider_id: user.id
     });
+
+    return createdProduct
+  }
+
+  @post('/addmenu')
+  async createMenu(
+    @param.query.number('product_id') product_id: number,
+    @requestBody() menu: Menu
+  ) {
+
+    let foundProduct = await this.productRepo.findById(product_id)
 
     let createdMenu = await this.menuRepo.create({
       price: menu.price,
       date: menu.date,
       time: menu.time,
-      product_id: createdProduct.product_id,
+      product_id: foundProduct.product_id,
       availability: true
     })
 
-    return {
-      menu: createdMenu,
-      product: createdProduct
-    };
+    return createdMenu
   }
 
   @get("/allproducts")
@@ -60,8 +66,8 @@ export class ProductListController {
     return await this.productRepo.find();
   }
 
-  @get('/menuinfo')
-  async getMenuItems(
+  @get('/allmenuinfo')
+  async getAllMenuItems(
     @param.query.number('product_id') product_id: number
   ): Promise<Array<Menu>> {
 
@@ -73,5 +79,23 @@ export class ProductListController {
     })
 
     return findMenuItems;
+  }
+
+  @get('/menuinfo')
+  async getOneMenu(
+    @param.query.number('menu_id') menu_id: number
+  ) {
+
+    let findMenu = await this.menuRepo.findById(menu_id);
+    return findMenu;
+  }
+
+  @get('/productinfo')
+  async getOneProduct(
+    @param.query.number('product_id') product_id: number
+  ) {
+
+    let foundProduct = await this.productRepo.findById(product_id);
+    return foundProduct;
   }
 }

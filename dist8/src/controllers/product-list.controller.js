@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const repository_1 = require("@loopback/repository");
 const product_repository_1 = require("../repositories/product.repository");
 const rest_1 = require("@loopback/rest");
+const product_1 = require("../models/product");
 const menu_repository_1 = require("../repositories/menu.repository");
 const menu_1 = require("../models/menu");
 const jsonwebtoken_1 = require("jsonwebtoken");
@@ -25,7 +26,7 @@ let ProductListController = class ProductListController {
         this.productRepo = productRepo;
         this.menuRepo = menuRepo;
     }
-    async createProduct(jwt, productName, productDescription, menu) {
+    async createProduct(jwt, product) {
         let user = null;
         try {
             let payload = jsonwebtoken_1.verify(jwt, 'shh');
@@ -35,26 +36,27 @@ let ProductListController = class ProductListController {
             throw new rest_1.HttpErrors.Unauthorized("Invalid token");
         }
         let createdProduct = await this.productRepo.create({
-            name: productName,
-            description: productDescription,
+            name: product.name,
+            description: product.description,
             provider_id: user.id
         });
+        return createdProduct;
+    }
+    async createMenu(product_id, menu) {
+        let foundProduct = await this.productRepo.findById(product_id);
         let createdMenu = await this.menuRepo.create({
             price: menu.price,
             date: menu.date,
             time: menu.time,
-            product_id: createdProduct.product_id,
+            product_id: foundProduct.product_id,
             availability: true
         });
-        return {
-            menu: createdMenu,
-            product: createdProduct
-        };
+        return createdMenu;
     }
     async getAllProducts() {
         return await this.productRepo.find();
     }
-    async getMenuItems(product_id) {
+    async getAllMenuItems(product_id) {
         let findMenuItems = this.menuRepo.find({
             where: {
                 product_id,
@@ -63,17 +65,31 @@ let ProductListController = class ProductListController {
         });
         return findMenuItems;
     }
+    async getOneMenu(menu_id) {
+        let findMenu = await this.menuRepo.findById(menu_id);
+        return findMenu;
+    }
+    async getOneProduct(product_id) {
+        let foundProduct = await this.productRepo.findById(product_id);
+        return foundProduct;
+    }
 };
 __decorate([
     rest_1.post("/addproduct"),
     __param(0, rest_1.param.query.string("jwt")),
-    __param(1, rest_1.param.query.string("productName")),
-    __param(2, rest_1.param.query.string("productDescription")),
-    __param(3, rest_1.requestBody()),
+    __param(1, rest_1.requestBody()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, String, String, menu_1.Menu]),
+    __metadata("design:paramtypes", [String, product_1.Product]),
     __metadata("design:returntype", Promise)
 ], ProductListController.prototype, "createProduct", null);
+__decorate([
+    rest_1.post('/addmenu'),
+    __param(0, rest_1.param.query.number('product_id')),
+    __param(1, rest_1.requestBody()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number, menu_1.Menu]),
+    __metadata("design:returntype", Promise)
+], ProductListController.prototype, "createMenu", null);
 __decorate([
     rest_1.get("/allproducts"),
     __metadata("design:type", Function),
@@ -81,12 +97,26 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], ProductListController.prototype, "getAllProducts", null);
 __decorate([
-    rest_1.get('/menuinfo'),
+    rest_1.get('/allmenuinfo'),
     __param(0, rest_1.param.query.number('product_id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", Promise)
-], ProductListController.prototype, "getMenuItems", null);
+], ProductListController.prototype, "getAllMenuItems", null);
+__decorate([
+    rest_1.get('/menuinfo'),
+    __param(0, rest_1.param.query.number('menu_id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number]),
+    __metadata("design:returntype", Promise)
+], ProductListController.prototype, "getOneMenu", null);
+__decorate([
+    rest_1.get('/productinfo'),
+    __param(0, rest_1.param.query.number('product_id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number]),
+    __metadata("design:returntype", Promise)
+], ProductListController.prototype, "getOneProduct", null);
 ProductListController = __decorate([
     __param(0, repository_1.repository(product_repository_1.ProductRepository.name)),
     __param(1, repository_1.repository(menu_repository_1.MenuRepository.name)),
