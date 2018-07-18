@@ -14,6 +14,7 @@ export declare class ProductListController {
     createMenu(product_id: number, menu: Menu): Promise<Menu>;
     getAllProducts(): Promise<Array<Product>>;
     getAllMenuItems(product_id: number): Promise<Array<Menu>>;
+    getProductByLocation(locationName: string): Promise<Array<Product>>;
     getOneMenu(menu_id: number): Promise<Menu>;
     getOneProduct(product_id: number): Promise<Product>;
     getUserProducts(user_id: number): Promise<Array<Product>>;

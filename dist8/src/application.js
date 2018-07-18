@@ -9,11 +9,7 @@ const boot_1 = require("@loopback/boot");
 const repository_1 = require("@loopback/repository");
 class UxperienceApplication extends boot_1.BootMixin(repository_1.RepositoryMixin(rest_1.RestApplication)) {
     constructor(options) {
-        super({
-            rest: {
-                port: process.env.PORT || 3000
-            }
-        });
+        super(options);
         this.sequence(sequence_1.MySequence);
         this.projectRoot = __dirname;
         // Customize @loopback/boot Booter Conventions here
@@ -31,26 +27,43 @@ class UxperienceApplication extends boot_1.BootMixin(repository_1.RepositoryMixi
         // });
         // this.dataSource(dataSourceConfig);
         // Use below for an in-memory database
+        /*
+        let dataSourceConfig = new juggler.DataSource({
+          name: "db",
+          connector: "loopback-connector-mysql",
+          host: 'localhost',
+          port: 3306,
+          database: 'localhost-api',
+          user: 'root',
+          password: ''
+    
+        });
+    
+    
+        this.dataSource(dataSourceConfig);
+    */
         let dataSourceConfig = new repository_1.juggler.DataSource({
             name: "db",
             connector: "loopback-connector-mysql",
-            host: 'localhost',
-            port: 3306,
-            database: 'uxperience',
-            user: 'root',
-            password: ''
+            host: process.env.DB_HOST,
+            port: process.env.DB_PORT,
+            database: process.env.DB_DATABASE,
+            user: process.env.DB_USER,
+            password: process.env.DB_PASSWORD
         });
         this.dataSource(dataSourceConfig);
-        // let dataSourceConfig = new juggler.DataSource({
-        //   name: "db",
-        //   connector: "loopback-connector-mysql",
-        //   host: process.env.DB_HOST,
-        //   port: process.env.DB_PORT,
-        //   database: process.env.DB_DATABASE,
-        //   user: process.env.DB_USER,
-        //   password: process.env.DB_PASSWORD
-        // });
-        // this.dataSource(dataSourceConfig);
+        /*
+            let dataSourceConfig = new juggler.DataSource({
+              name: "db",
+              connector: "loopback-connector-mysql",
+              host: process.env.DB_HOST,
+              port: process.env.DB_PORT,
+              database: process.env.DB_DATABASE,
+              user: process.env.DB_USER,
+              password: process.env.DB_PASSWORD
+    
+            });
+            this.dataSource(dataSourceConfig);*/
     }
     async start() {
         await super.start();

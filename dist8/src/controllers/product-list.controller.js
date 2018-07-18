@@ -43,7 +43,9 @@ let ProductListController = class ProductListController {
             name: product.name,
             description: product.description,
             category_id: product.category_id,
-            provider_id: user.id
+            provider_id: user.id,
+            city: product.city,
+            photo_url: product.photo_url
         });
         return createdProduct;
     }
@@ -69,6 +71,14 @@ let ProductListController = class ProductListController {
             }
         });
         return findMenuItems;
+    }
+    //NEW
+    async getProductByLocation(locationName) {
+        return await this.productRepo.find({
+            where: {
+                city: locationName
+            }
+        });
     }
     async getOneMenu(menu_id) {
         let findMenu = await this.menuRepo.findById(menu_id);
@@ -133,6 +143,13 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], ProductListController.prototype, "getAllMenuItems", null);
 __decorate([
+    rest_1.get("/productbylocation"),
+    __param(0, rest_1.param.query.string("city")),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], ProductListController.prototype, "getProductByLocation", null);
+__decorate([
     rest_1.get('/menuinfo'),
     __param(0, rest_1.param.query.number('menu_id')),
     __metadata("design:type", Function),
@@ -165,8 +182,8 @@ ProductListController = __decorate([
     __param(1, repository_1.repository(menu_repository_1.MenuRepository.name)),
     __param(2, repository_1.repository(transaction_repository_1.TransactionRepository.name)),
     __metadata("design:paramtypes", [product_repository_1.ProductRepository,
-        menu_repository_1.MenuRepository,
-        transaction_repository_1.TransactionRepository])
+    menu_repository_1.MenuRepository,
+    transaction_repository_1.TransactionRepository])
 ], ProductListController);
 exports.ProductListController = ProductListController;
 //# sourceMappingURL=product-list.controller.js.map

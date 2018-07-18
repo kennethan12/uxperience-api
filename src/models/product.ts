@@ -36,6 +36,11 @@ export class Product extends Entity {
   })
   photo_url: string;
 
+  @property({
+    type: "string"
+  })
+  city: string;
+
   getProductId() {
     return this.product_id;
   }

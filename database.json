@@ -8,6 +8,24 @@
     "port": "3306",
     "user": "root",
     "password": "",
-    "database": "uxperience"
+    "database": "localhost-api"
+  },
+  "live": {
+    "driver": "mysql",
+    "host": {
+      "ENV": "DB_HOST"
+    },
+    "port": {
+      "ENV": "DB_PORT"
+    },
+    "user": {
+      "ENV": "DB_USER"
+    },
+    "password": {
+      "ENV": "DB_PASSWORD"
+    },
+    "database": {
+      "ENV": "DB_DATABASE"
+    }
   }
 }
