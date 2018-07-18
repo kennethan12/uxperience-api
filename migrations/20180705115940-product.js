@@ -47,6 +47,9 @@ exports.up = function (db, callback) {
     },
     photo_url: {
       type: 'string'
+    },
+    city: {
+      type: 'string'
     }
   }, callback);
 };

@@ -37,13 +37,13 @@ export class UxperienceApplication extends BootMixin(
     // this.dataSource(dataSourceConfig);
 
     // Use below for an in-memory database
-    /*
+
     let dataSourceConfig = new juggler.DataSource({
       name: "db",
       connector: "loopback-connector-mysql",
       host: 'localhost',
       port: 3306,
-      database: 'localhost-api',
+      database: 'uxperience',
       user: 'root',
       password: ''
 
@@ -51,18 +51,7 @@ export class UxperienceApplication extends BootMixin(
 
 
     this.dataSource(dataSourceConfig);
-*/
-    let dataSourceConfig = new juggler.DataSource({
-      name: "db",
-      connector: "loopback-connector-mysql",
-      host: process.env.DB_HOST,
-      port: process.env.DB_PORT,
-      database: process.env.DB_DATABASE,
-      user: process.env.DB_USER,
-      password: process.env.DB_PASSWORD
 
-    });
-    this.dataSource(dataSourceConfig);
     /*
         let dataSourceConfig = new juggler.DataSource({
           name: "db",

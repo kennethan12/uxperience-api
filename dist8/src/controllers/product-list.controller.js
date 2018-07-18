@@ -182,8 +182,8 @@ ProductListController = __decorate([
     __param(1, repository_1.repository(menu_repository_1.MenuRepository.name)),
     __param(2, repository_1.repository(transaction_repository_1.TransactionRepository.name)),
     __metadata("design:paramtypes", [product_repository_1.ProductRepository,
-    menu_repository_1.MenuRepository,
-    transaction_repository_1.TransactionRepository])
+        menu_repository_1.MenuRepository,
+        transaction_repository_1.TransactionRepository])
 ], ProductListController);
 exports.ProductListController = ProductListController;
 //# sourceMappingURL=product-list.controller.js.map
