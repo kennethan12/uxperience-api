@@ -19,12 +19,16 @@ const product_1 = require("../models/product");
 const menu_repository_1 = require("../repositories/menu.repository");
 const menu_1 = require("../models/menu");
 const jsonwebtoken_1 = require("jsonwebtoken");
+const transaction_repository_1 = require("../repositories/transaction.repository");
 // Uncomment these imports to begin using these cool features!
 // import {inject} from '@loopback/context';
 let ProductListController = class ProductListController {
-    constructor(productRepo, menuRepo) {
+    constructor(productRepo, menuRepo, transactionRepo) {
         this.productRepo = productRepo;
         this.menuRepo = menuRepo;
+        this.transactionRepo = transactionRepo;
+        this.menuArray = [];
+        this.productArray = [];
     }
     async createProduct(jwt, product) {
         let user = null;
@@ -38,6 +42,7 @@ let ProductListController = class ProductListController {
         let createdProduct = await this.productRepo.create({
             name: product.name,
             description: product.description,
+            category_id: product.category_id,
             provider_id: user.id
         });
         return createdProduct;
@@ -72,6 +77,30 @@ let ProductListController = class ProductListController {
     async getOneProduct(product_id) {
         let foundProduct = await this.productRepo.findById(product_id);
         return foundProduct;
+    }
+    async getUserProducts(user_id) {
+        let userProducts = await this.productRepo.find({
+            where: {
+                provider_id: user_id
+            }
+        });
+        return userProducts;
+    }
+    async getBoughtProducts(user_id) {
+        let userTransactions = await this.transactionRepo.find({
+            where: {
+                customer_id: user_id
+            }
+        });
+        for (let i = 0; i < userTransactions.length; i++) {
+            let userMenu = await this.menuRepo.findById(userTransactions[i].menu_id);
+            this.menuArray.push(userMenu);
+        }
+        for (let i = 0; i < this.menuArray.length; i++) {
+            let userProduct = await this.productRepo.findById(this.menuArray[i].product_id);
+            this.productArray.push(userProduct);
+        }
+        return this.productArray;
     }
 };
 __decorate([
@@ -117,11 +146,27 @@ __decorate([
     __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", Promise)
 ], ProductListController.prototype, "getOneProduct", null);
+__decorate([
+    rest_1.get('/myproducts'),
+    __param(0, rest_1.param.query.number('user_id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number]),
+    __metadata("design:returntype", Promise)
+], ProductListController.prototype, "getUserProducts", null);
+__decorate([
+    rest_1.get('myboughtproducts'),
+    __param(0, rest_1.param.query.number('user_id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number]),
+    __metadata("design:returntype", Promise)
+], ProductListController.prototype, "getBoughtProducts", null);
 ProductListController = __decorate([
     __param(0, repository_1.repository(product_repository_1.ProductRepository.name)),
     __param(1, repository_1.repository(menu_repository_1.MenuRepository.name)),
+    __param(2, repository_1.repository(transaction_repository_1.TransactionRepository.name)),
     __metadata("design:paramtypes", [product_repository_1.ProductRepository,
-        menu_repository_1.MenuRepository])
+        menu_repository_1.MenuRepository,
+        transaction_repository_1.TransactionRepository])
 ], ProductListController);
 exports.ProductListController = ProductListController;
 //# sourceMappingURL=product-list.controller.js.map

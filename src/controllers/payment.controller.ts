@@ -44,23 +44,33 @@ export class PaymentController {
 
     let stripe = require("stripe")("sk_test_pzMWwDz7pwde0nT3Tjx3uxN4");
 
-    let foundMenu = this.menuRepo.findOne({
-      where: {
-        menu_id
-      }
-    });
+    console.log("before foundMenu")
+    let foundMenu = await this.menuRepo.findById(menu_id);
+    let foundProduct = await this.productRepo.findById(foundMenu.product_id)
+
 
     try {
       const charge = await stripe.charges.create({
-        source: paymentRequest.stripeToken,
+        source: 'tok_visa', // paymentRequest.stripeToken,
         currency: "usd",
-        amount: foundMenu
+        amount: foundMenu.price * 100
       });
 
+      console.log(charge)
+
       // Create a Transaction in your Transaction Repo
+      let createdTransaction = await this.transactionRepo.create({
+        stripe_charge_id: charge.id,
+        price: foundMenu.price,
+        customer_token: jwt,
+        customer_id: user.id,
+        provider_id: foundProduct.provider_id,
+        menu_id,
+        date_sold: new Date().toString()
+      })
       // Return the transaction
 
-      return charge;
+      return createdTransaction;
     } catch (e) {
       console.log(e);
       throw new HttpErrors.BadRequest("Charge failed");

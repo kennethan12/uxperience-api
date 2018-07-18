@@ -9,12 +9,17 @@ export class Transaction extends Entity {
     type: 'number',
     id: true
   })
-  transaction_id: string;
+  transaction_id: number;
 
   @property({
     type: 'string'
   })
   stripe_charge_id: string;
+
+  @property({
+    type: 'number'
+  })
+  price: number;
 
   @property({
     type: 'string'
@@ -39,7 +44,7 @@ export class Transaction extends Entity {
   @property({
     type: 'string'
   })
-  date_sold: Date;
+  date_sold: string;
 
   getTransactionId() {
     return this.transaction_id;
