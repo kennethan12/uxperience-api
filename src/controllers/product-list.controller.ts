@@ -36,7 +36,8 @@ export class ProductListController {
       name: product.name,
       description: product.description,
       provider_id: user.id,
-      city: product.city
+      city: product.city,
+      photo_url: product.photo_url
     });
 
     return createdProduct

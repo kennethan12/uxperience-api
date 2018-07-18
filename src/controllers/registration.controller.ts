@@ -42,7 +42,8 @@ export class RegistrationController {
         lastname: user.lastname,
         email: user.email,
         phone: user.phone,
-        password: hashedPassword
+        password: hashedPassword,
+        photo_url: user.photo_url
       });
 
       let createUser = {
@@ -50,6 +51,7 @@ export class RegistrationController {
         email: createdUser.email,
         firstname: createdUser.firstname,
         lastname: createdUser.lastname,
+        photo_url: createdUser.photo_url,
         phone: createdUser.phone
       };
 
