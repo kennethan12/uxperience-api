@@ -1,4 +1,5 @@
 import { TransactionRepository } from "../repositories/transaction.repository";
+import { Transaction } from "../models/transaction";
 import { UserRepository } from "../repositories/user.repository";
 import { MenuRepository } from "../repositories/menu.repository";
 import { PaymentRequest } from "../models/payment-request";
@@ -9,5 +10,5 @@ export declare class PaymentController {
     protected menuRepo: MenuRepository;
     protected productRepo: ProductRepository;
     constructor(transactionRepo: TransactionRepository, userRepo: UserRepository, menuRepo: MenuRepository, productRepo: ProductRepository);
-    makePayment(jwt: string, menu_id: number, paymentRequest: PaymentRequest): Promise<any>;
+    makePayment(jwt: string, menu_id: number, paymentRequest: PaymentRequest): Promise<Transaction>;
 }

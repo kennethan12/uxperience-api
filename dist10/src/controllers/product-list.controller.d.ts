@@ -2,14 +2,21 @@ import { ProductRepository } from "../repositories/product.repository";
 import { Product } from "../models/product";
 import { MenuRepository } from "../repositories/menu.repository";
 import { Menu } from "../models/menu";
+import { TransactionRepository } from "../repositories/transaction.repository";
 export declare class ProductListController {
     private productRepo;
     private menuRepo;
-    constructor(productRepo: ProductRepository, menuRepo: MenuRepository);
-    createProduct(jwt: string, productName: string, productDescription: string, menu: Menu): Promise<{
-        menu: Menu;
-        product: Product;
-    }>;
+    private transactionRepo;
+    private menuArray;
+    private productArray;
+    constructor(productRepo: ProductRepository, menuRepo: MenuRepository, transactionRepo: TransactionRepository);
+    createProduct(jwt: string, product: Product): Promise<Product>;
+    createMenu(product_id: number, menu: Menu): Promise<Menu>;
     getAllProducts(): Promise<Array<Product>>;
-    getMenuItems(product_id: number): Promise<Array<Menu>>;
+    getAllMenuItems(product_id: number): Promise<Array<Menu>>;
+    getProductByLocation(locationName: string): Promise<Array<Product>>;
+    getOneMenu(menu_id: number): Promise<Menu>;
+    getOneProduct(product_id: number): Promise<Product>;
+    getUserProducts(user_id: number): Promise<Array<Product>>;
+    getBoughtProducts(user_id: number): Promise<Array<Product>>;
 }

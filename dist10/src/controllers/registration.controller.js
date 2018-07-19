@@ -43,13 +43,15 @@ let RegistrationController = class RegistrationController {
                 lastname: user.lastname,
                 email: user.email,
                 phone: user.phone,
-                password: hashedPassword
+                password: hashedPassword,
+                photo_url: user.photo_url
             });
             let createUser = {
                 id: createdUser.user_id,
                 email: createdUser.email,
                 firstname: createdUser.firstname,
                 lastname: createdUser.lastname,
+                photo_url: createdUser.photo_url,
                 phone: createdUser.phone
             };
             return createUser;

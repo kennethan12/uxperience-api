@@ -6,5 +6,6 @@ export declare class Product extends Entity {
     description: string;
     category_id: number;
     photo_url: string;
+    city: string;
     getProductId(): number;
 }

@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const repository_1 = require("@loopback/repository");
 const user_repository_1 = require("../repositories/user.repository");
 const rest_1 = require("@loopback/rest");
+const jsonwebtoken_1 = require("jsonwebtoken");
 // Uncomment these imports to begin using these cool features!
 // import {inject} from '@loopback/context';
 let UsersController = class UsersController {
@@ -24,12 +25,20 @@ let UsersController = class UsersController {
     async getAllUsers() {
         return await this.userRepo.find();
     }
-    async getOneUser(id) {
-        return await this.userRepo.find({
-            where: {
-                user_id: id
-            }
-        });
+    async getOneUser(jwt) {
+        let user = null;
+        try {
+            let payload = jsonwebtoken_1.verify(jwt, 'shh');
+            user = payload.user;
+        }
+        catch (err) {
+            throw new rest_1.HttpErrors.Unauthorized("Invalid token");
+        }
+        return await this.userRepo.findById(user.id);
+    }
+    async getHost(provider_id) {
+        let foundHost = await this.userRepo.findById(provider_id);
+        return foundHost;
     }
 };
 __decorate([
@@ -39,12 +48,19 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], UsersController.prototype, "getAllUsers", null);
 __decorate([
-    rest_1.get('/user/{id}'),
-    __param(0, rest_1.param.query.string("id")),
+    rest_1.get('/user'),
+    __param(0, rest_1.param.query.string("jwt")),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)
 ], UsersController.prototype, "getOneUser", null);
+__decorate([
+    rest_1.get('/producthost'),
+    __param(0, rest_1.param.query.number('provider_id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], UsersController.prototype, "getHost", null);
 UsersController = __decorate([
     __param(0, repository_1.repository(user_repository_1.UserRepository.name)),
     __metadata("design:paramtypes", [user_repository_1.UserRepository])

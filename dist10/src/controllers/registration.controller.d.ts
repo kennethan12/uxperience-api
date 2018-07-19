@@ -8,6 +8,7 @@ export declare class RegistrationController {
         email: string;
         firstname: string;
         lastname: string;
+        photo_url: string;
         phone: string;
     }>;
 }
