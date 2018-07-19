@@ -57,8 +57,11 @@ export class LoginController {
 
     let jwt = sign({
       user: {
-        id: foundUser.user_id,
-        email: foundUser.email
+        user_id: foundUser.user_id,
+        email: foundUser.email,
+        firstname: foundUser.firstname,
+        lastname: foundUser.lastname,
+        photo_url: foundUser.photo_url
       }
     }, 'shh', {
         issuer: 'auth.ix.co.za',

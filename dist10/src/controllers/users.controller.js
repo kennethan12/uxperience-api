@@ -34,7 +34,14 @@ let UsersController = class UsersController {
         catch (err) {
             throw new rest_1.HttpErrors.Unauthorized("Invalid token");
         }
-        return await this.userRepo.findById(user.id);
+        return await this.userRepo.findById(user.user_id);
+    }
+    async changeProfilePic(url, userId) {
+        let user = await this.userRepo.findById(userId);
+        await this.userRepo.updateById(userId, {
+            photo_url: url
+        });
+        return await this.userRepo.findById(userId);
     }
     async getHost(provider_id) {
         let foundHost = await this.userRepo.findById(provider_id);
@@ -54,6 +61,14 @@ __decorate([
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)
 ], UsersController.prototype, "getOneUser", null);
+__decorate([
+    rest_1.get('/changeprofilepic'),
+    __param(0, rest_1.param.query.string("url")),
+    __param(1, rest_1.param.query.number("userid")),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, Number]),
+    __metadata("design:returntype", Promise)
+], UsersController.prototype, "changeProfilePic", null);
 __decorate([
     rest_1.get('/producthost'),
     __param(0, rest_1.param.query.number('provider_id')),

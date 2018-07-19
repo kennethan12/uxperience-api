@@ -47,7 +47,7 @@ let RegistrationController = class RegistrationController {
                 photo_url: user.photo_url
             });
             let createUser = {
-                id: createdUser.user_id,
+                user_id: createdUser.user_id,
                 email: createdUser.email,
                 firstname: createdUser.firstname,
                 lastname: createdUser.lastname,

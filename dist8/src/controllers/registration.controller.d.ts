@@ -4,7 +4,7 @@ export declare class RegistrationController {
     private userRepo;
     constructor(userRepo: UserRepository);
     createUser(user: User): Promise<{
-        id: number;
+        user_id: number;
         email: string;
         firstname: string;
         lastname: string;
