@@ -41,7 +41,7 @@ export class ProductListController {
       name: product.name,
       description: product.description,
       category_id: product.category_id,
-      provider_id: user.id,
+      provider_id: user.user_id,
       city: product.city,
       photo_url: product.photo_url
     });
