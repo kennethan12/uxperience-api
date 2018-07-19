@@ -20,7 +20,7 @@ __decorate([
         type: 'number',
         id: true
     }),
-    __metadata("design:type", String)
+    __metadata("design:type", Number)
 ], Transaction.prototype, "transaction_id", void 0);
 __decorate([
     repository_1.property({
@@ -28,6 +28,12 @@ __decorate([
     }),
     __metadata("design:type", String)
 ], Transaction.prototype, "stripe_charge_id", void 0);
+__decorate([
+    repository_1.property({
+        type: 'number'
+    }),
+    __metadata("design:type", Number)
+], Transaction.prototype, "price", void 0);
 __decorate([
     repository_1.property({
         type: 'string'
@@ -56,7 +62,7 @@ __decorate([
     repository_1.property({
         type: 'string'
     }),
-    __metadata("design:type", Date)
+    __metadata("design:type", String)
 ], Transaction.prototype, "date_sold", void 0);
 Transaction = __decorate([
     repository_1.model({
