@@ -14,8 +14,13 @@ export class UxperienceApplication extends BootMixin(
   RepositoryMixin(RestApplication)
 ) {
   constructor(options?: ApplicationConfig) {
-    super(options);
+    super({
+      rest: {
+        port: process.env.PORT || 3000
+      }
+    });
 
+    // Set up the custom sequence
     this.sequence(MySequence);
 
     this.projectRoot = __dirname;
