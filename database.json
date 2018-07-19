@@ -8,7 +8,7 @@
     "port": "3306",
     "user": "root",
     "password": "",
-    "database": "uxperience"
+    "database": "localhost-api"
   },
   "live": {
     "driver": "mysql",

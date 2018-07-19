@@ -33,8 +33,30 @@ export class UsersController {
       throw new HttpErrors.Unauthorized("Invalid token")
     }
 
-    return await this.userRepo.findById(user.id);
+    return await this.userRepo.findById(user.user_id);
   }
+
+
+
+  @get('/changeprofilepic')
+  async changeProfilePic(
+    @param.query.string("url") url: string,
+    @param.query.number("userid") userId: number,
+  ) {
+
+    let user = await this.userRepo.findById(userId);
+
+    await this.userRepo.updateById(userId, {
+      photo_url: url
+    })
+
+    return await this.userRepo.findById(userId);
+
+  }
+
+
+
+
 
   @get('/producthost')
   async getHost(
