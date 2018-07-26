@@ -31,6 +31,7 @@ let ProductListController = class ProductListController {
         this.productArray = [];
     }
     async createProduct(jwt, product) {
+        /* tslint:disable no-any */
         let user = null;
         try {
             let payload = jsonwebtoken_1.verify(jwt, 'shh');
@@ -102,6 +103,7 @@ let ProductListController = class ProductListController {
                 customer_id: user_id
             }
         });
+        /* tslint:disable prefer-for-of */
         for (let i = 0; i < userTransactions.length; i++) {
             let userMenu = await this.menuRepo.findById(userTransactions[i].menu_id);
             this.menuArray.push(userMenu);

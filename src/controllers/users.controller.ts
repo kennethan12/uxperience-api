@@ -55,7 +55,13 @@ export class UsersController {
   }
 
 
-
+  @get('/anyuser')
+  async getAnyUser(
+    @param.query.number('user_id') user_id: number
+  ) {
+    let user = await this.userRepo.findById(user_id)
+    return user;
+  }
 
 
   @get('/producthost')

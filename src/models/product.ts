@@ -41,6 +41,11 @@ export class Product extends Entity {
   })
   city: string;
 
+  @property({
+    type: 'number'
+  })
+  rating: number;
+
   getProductId() {
     return this.product_id;
   }

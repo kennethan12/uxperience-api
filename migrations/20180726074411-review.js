@@ -15,51 +15,52 @@ exports.setup = function (options, seedLink) {
 };
 
 exports.up = function (db, callback) {
-
-  db.createTable('product', {
-    product_id: {
+  db.createTable('review', {
+    review_id: {
       type: 'int',
       primaryKey: true,
       autoIncrement: true
     },
-    provider_id: {
+    reviewer_id: {
       type: 'int',
       notNull: true,
       foreignKey: {
-        name: 'provider_id_product_fk',
+        name: 'reviewer_id_review_fk',
         table: 'user',
         rules: {
-          onDelete: 'RESTRICT',
+          onDelete: 'CASCADE',
           onUpdate: 'RESTRICT'
         },
         mapping: 'user_id'
       }
     },
-    name: {
-      type: 'string',
-      notNull: true
-    },
-    description: {
-      type: 'string'
-    },
-    category_id: {
-      type: 'int'
-    },
-    photo_url: {
-      type: 'string'
-    },
-    city: {
-      type: 'string'
+    product_id: {
+      type: 'int',
+      notNull: true,
+      foreignKey: {
+        name: 'product_id_review_fk',
+        table: 'product',
+        rules: {
+          onDelete: 'CASCADE',
+          onUpdate: 'RESTRICT'
+        },
+        mapping: 'product_id'
+      }
     },
     rating: {
       type: 'decimal',
-      length: '2, 1'
+      notNull: true
+    },
+    description: {
+      type: 'string',
+      length: 4069,
+      notNull: true
     }
   }, callback);
 };
 
 exports.down = function (db, callback) {
-  db.dropTable('product', function (err) {
+  db.dropTable('review', function (err) {
     if (err) return callback(err);
 
     return callback();

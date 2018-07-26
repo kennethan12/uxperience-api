@@ -28,6 +28,8 @@ export class ProductListController {
     @param.query.string("jwt") jwt: string,
     @requestBody() product: Product
   ) {
+
+    /* tslint:disable no-any */
     let user = null;
 
     try {
@@ -150,6 +152,7 @@ export class ProductListController {
       }
     });
 
+    /* tslint:disable prefer-for-of */
     for (let i = 0; i < userTransactions.length; i++) {
       let userMenu = await this.menuRepo.findById(userTransactions[i].menu_id)
       this.menuArray.push(userMenu)

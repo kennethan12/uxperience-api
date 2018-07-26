@@ -10,4 +10,5 @@ __export(require("./users.controller"));
 __export(require("./product-list.controller"));
 __export(require("./payment.controller"));
 __export(require("./categories.controller"));
+__export(require("./review.controller"));
 //# sourceMappingURL=index.js.map

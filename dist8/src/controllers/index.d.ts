@@ -5,3 +5,4 @@ export * from './users.controller';
 export * from './product-list.controller';
 export * from './payment.controller';
 export * from './categories.controller';
+export * from './review.controller';
