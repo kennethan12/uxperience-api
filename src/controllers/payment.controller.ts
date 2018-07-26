@@ -63,7 +63,7 @@ export class PaymentController {
         stripe_charge_id: charge.id,
         price: foundMenu.price,
         customer_token: jwt,
-        customer_id: user.id,
+        customer_id: user.user_id,
         provider_id: foundProduct.provider_id,
         menu_id,
         date_sold: new Date().toString()

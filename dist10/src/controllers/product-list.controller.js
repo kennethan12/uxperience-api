@@ -43,7 +43,7 @@ let ProductListController = class ProductListController {
             name: product.name,
             description: product.description,
             category_id: product.category_id,
-            provider_id: user.id,
+            provider_id: user.user_id,
             city: product.city,
             photo_url: product.photo_url
         });
@@ -84,6 +84,9 @@ let ProductListController = class ProductListController {
         let findMenu = await this.menuRepo.findById(menu_id);
         return findMenu;
     }
+    async deleteMenu(menu_id) {
+        return await this.menuRepo.deleteById(menu_id);
+    }
     async getOneProduct(product_id) {
         let foundProduct = await this.productRepo.findById(product_id);
         return foundProduct;
@@ -111,6 +114,40 @@ let ProductListController = class ProductListController {
             this.productArray.push(userProduct);
         }
         return this.productArray;
+    }
+    async changeProductPic(downloadURL, product_id) {
+        return await this.productRepo.updateById(product_id, {
+            photo_url: downloadURL
+        });
+    }
+    async updateProduct(product_id, product) {
+        if (product.name) {
+            await this.productRepo.updateById(product_id, {
+                name: product.name
+            });
+        }
+        if (product.description) {
+            await this.productRepo.updateById(product_id, {
+                description: product.description
+            });
+        }
+        if (product.category_id) {
+            await this.productRepo.updateById(product_id, {
+                category_id: product.category_id
+            });
+        }
+        return await this.productRepo.findById(product_id);
+    }
+    async deleteProduct(product_id) {
+        let menus = await this.menuRepo.find({
+            where: {
+                product_id: product_id
+            }
+        });
+        for (let i = 0; i < menus.length; ++i) {
+            await this.menuRepo.delete(menus[i]);
+        }
+        return await this.productRepo.deleteById(product_id);
     }
 };
 __decorate([
@@ -157,6 +194,13 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], ProductListController.prototype, "getOneMenu", null);
 __decorate([
+    rest_1.get('/deletemenu'),
+    __param(0, rest_1.param.query.number('menu_id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number]),
+    __metadata("design:returntype", Promise)
+], ProductListController.prototype, "deleteMenu", null);
+__decorate([
     rest_1.get('/productinfo'),
     __param(0, rest_1.param.query.number('product_id')),
     __metadata("design:type", Function),
@@ -177,6 +221,29 @@ __decorate([
     __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", Promise)
 ], ProductListController.prototype, "getBoughtProducts", null);
+__decorate([
+    rest_1.get('/changeproductpic'),
+    __param(0, rest_1.param.query.string('url')),
+    __param(1, rest_1.param.query.string('productID')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, String]),
+    __metadata("design:returntype", Promise)
+], ProductListController.prototype, "changeProductPic", null);
+__decorate([
+    rest_1.post('/updateproduct'),
+    __param(0, rest_1.param.query.string('productid')),
+    __param(1, rest_1.requestBody()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, product_1.Product]),
+    __metadata("design:returntype", Promise)
+], ProductListController.prototype, "updateProduct", null);
+__decorate([
+    rest_1.get('/deleteproduct'),
+    __param(0, rest_1.param.query.number('productid')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number]),
+    __metadata("design:returntype", Promise)
+], ProductListController.prototype, "deleteProduct", null);
 ProductListController = __decorate([
     __param(0, repository_1.repository(product_repository_1.ProductRepository.name)),
     __param(1, repository_1.repository(menu_repository_1.MenuRepository.name)),

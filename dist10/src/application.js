@@ -37,7 +37,7 @@ class UxperienceApplication extends boot_1.BootMixin(repository_1.RepositoryMixi
         //   connector: "loopback-connector-mysql",
         //   host: 'localhost',
         //   port: 3306,
-        //   database: 'uxperience',
+        //   database: 'localhost-api',
         //   user: 'root',
         //   password: ''
         // });
