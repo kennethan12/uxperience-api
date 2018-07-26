@@ -24,9 +24,9 @@ let LoginController = class LoginController {
     constructor(userRepo) {
         this.userRepo = userRepo;
     }
-    verifyToken(jwt) {
+    async verifyToken(jwt) {
         try {
-            let payload = jsonwebtoken_1.verify(jwt, 'shh');
+            let payload = await jsonwebtoken_1.verify(jwt, 'shh');
             return payload;
         }
         catch (err) {
@@ -79,7 +79,7 @@ __decorate([
     __param(0, rest_1.param.query.string('jwt')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:returntype", Promise)
 ], LoginController.prototype, "verifyToken", null);
 __decorate([
     rest_1.post('/login'),

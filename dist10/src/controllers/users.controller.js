@@ -37,11 +37,14 @@ let UsersController = class UsersController {
         return await this.userRepo.findById(user.user_id);
     }
     async changeProfilePic(url, userId) {
-        let user = await this.userRepo.findById(userId);
         await this.userRepo.updateById(userId, {
             photo_url: url
         });
         return await this.userRepo.findById(userId);
+    }
+    async getAnyUser(user_id) {
+        let user = await this.userRepo.findById(user_id);
+        return user;
     }
     async getHost(provider_id) {
         let foundHost = await this.userRepo.findById(provider_id);
@@ -70,10 +73,17 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], UsersController.prototype, "changeProfilePic", null);
 __decorate([
+    rest_1.get('/anyuser'),
+    __param(0, rest_1.param.query.number('user_id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number]),
+    __metadata("design:returntype", Promise)
+], UsersController.prototype, "getAnyUser", null);
+__decorate([
     rest_1.get('/producthost'),
     __param(0, rest_1.param.query.number('provider_id')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
+    __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", Promise)
 ], UsersController.prototype, "getHost", null);
 UsersController = __decorate([

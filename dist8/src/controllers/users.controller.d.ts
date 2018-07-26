@@ -7,5 +7,5 @@ export declare class UsersController {
     getOneUser(jwt: string): Promise<User>;
     changeProfilePic(url: string, userId: number): Promise<User>;
     getAnyUser(user_id: number): Promise<User>;
-    getHost(provider_id: string): Promise<User>;
+    getHost(provider_id: number): Promise<User>;
 }

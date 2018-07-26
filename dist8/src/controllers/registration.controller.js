@@ -27,6 +27,9 @@ let RegistrationController = class RegistrationController {
         if (!user.email || !user.password || !user.firstname || !user.lastname) {
             throw new rest_1.HttpErrors.BadRequest('missing data');
         }
+        if (user.email.indexOf("@") == -1) {
+            throw new rest_1.HttpErrors.BadRequest('please input valid email');
+        }
         // Check that user does not already exist
         let userExists = !!(await this.userRepo.count({
             and: [

@@ -37,7 +37,6 @@ let UsersController = class UsersController {
         return await this.userRepo.findById(user.user_id);
     }
     async changeProfilePic(url, userId) {
-        let user = await this.userRepo.findById(userId);
         await this.userRepo.updateById(userId, {
             photo_url: url
         });
@@ -84,7 +83,7 @@ __decorate([
     rest_1.get('/producthost'),
     __param(0, rest_1.param.query.number('provider_id')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
+    __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", Promise)
 ], UsersController.prototype, "getHost", null);
 UsersController = __decorate([

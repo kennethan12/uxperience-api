@@ -52,6 +52,20 @@ let CategoriesController = class CategoriesController {
         });
         return categoryProducts;
     }
+    async getCategoryByID(category_id) {
+        return await this.categoryRepo.findOne({
+            where: {
+                category_id: category_id
+            }
+        });
+    }
+    async getCategoryByName(category_name) {
+        return await this.categoryRepo.findOne({
+            where: {
+                name: category_name
+            }
+        });
+    }
     async getAllCategories() {
         let allCategories = await this.categoryRepo.find();
         return allCategories;
@@ -71,6 +85,20 @@ __decorate([
     __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", Promise)
 ], CategoriesController.prototype, "getCategoryProducts", null);
+__decorate([
+    rest_1.get('/categorybyid'),
+    __param(0, rest_1.param.query.number('category_id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number]),
+    __metadata("design:returntype", Promise)
+], CategoriesController.prototype, "getCategoryByID", null);
+__decorate([
+    rest_1.get('/categorybyname'),
+    __param(0, rest_1.param.query.string('category_name')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], CategoriesController.prototype, "getCategoryByName", null);
 __decorate([
     rest_1.get('/allcategories'),
     __metadata("design:type", Function),

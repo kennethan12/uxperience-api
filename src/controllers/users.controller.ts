@@ -1,8 +1,9 @@
 import { repository } from "@loopback/repository";
 import { UserRepository } from "../repositories/user.repository";
-import { get, param, HttpErrors } from "@loopback/rest";
+import { get, param, HttpErrors, requestBody, post } from "@loopback/rest";
 import { User } from "../models/user";
 import { verify } from "jsonwebtoken";
+import { Product } from "../models/product";
 
 // Uncomment these imports to begin using these cool features!
 
@@ -44,7 +45,6 @@ export class UsersController {
     @param.query.number("userid") userId: number,
   ) {
 
-    let user = await this.userRepo.findById(userId);
 
     await this.userRepo.updateById(userId, {
       photo_url: url
@@ -66,10 +66,20 @@ export class UsersController {
 
   @get('/producthost')
   async getHost(
-    @param.query.number('provider_id') provider_id: string
+    @param.query.number('provider_id') provider_id: number
   ) {
 
     let foundHost = await this.userRepo.findById(provider_id);
     return foundHost
   }
+
+
+
+
+
+
+
+
 }
+
+

@@ -40,7 +40,7 @@ export class CategoriesController {
       name: category.name
     })
 
-    return newCategory
+    return newCategory;
   }
 
   @get('/categoryproducts')
@@ -53,6 +53,32 @@ export class CategoriesController {
       }
     })
     return categoryProducts
+  }
+
+  @get('/categorybyid')
+  async getCategoryByID(
+    @param.query.number('category_id') category_id: number
+  ) {
+
+    return await this.categoryRepo.findOne({
+      where: {
+        category_id: category_id
+      }
+    }) as Category;
+
+  }
+
+  @get('/categorybyname')
+  async getCategoryByName(
+    @param.query.string('category_name') category_name: string
+  ) {
+
+    return await this.categoryRepo.findOne({
+      where: {
+        name: category_name
+      }
+    }) as Category;
+
   }
 
   @get('/allcategories')

@@ -22,6 +22,13 @@ export class RegistrationController {
       throw new HttpErrors.BadRequest('missing data');
     }
 
+    if (user.email.indexOf("@") == -1) {
+
+      throw new HttpErrors.BadRequest('please input valid email');
+
+
+    }
+
     // Check that user does not already exist
     let userExists: boolean = !!(await this.userRepo.count({
       and: [

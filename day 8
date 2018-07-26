@@ -1,0 +1,116 @@
+day 8
+
+
+
+Database Migration:
+
+Apps need a format before they can run. Manually create database tables 
+
+
+How to share database changes
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+HANKS TALK:
+
+api design best practices
+
+set of rules describing how an application reacts with another and mechanisms which allow how interactions happen
+
+API hide complexity and let you interact one system with another 
+
+
+REST features
+
+
+client and server separated
+
+cacheable
+
+stateless
+
+uniform interface
+
+layered system- architecture is hierarchical'
+
+
+
+Good API design:
+
+
+Gather requirements -- understand what you're building and who it's for
+
+
+
+Write your API early and often 
+
+
+start before you've implemented it
+
+
+
+
+
+API RULES::
+
+1. Your API should do one thing and do it well
+
+2. Functionality should be easy to explain
+
+3. Know your audience/domain
+
+4. If it's hard to name don't do it.
+
+5. When in doubt leave it out!!!
+
+6. easy to use even without documentation
+
+7. Make it hard to misuse
+
+9. Easy to evolve
+
+10. Stay stateless
+
+
+
+
+POST should return same body as GET but shouldn't include ID
+
+
+
+
+
+
+
+
+
+
+

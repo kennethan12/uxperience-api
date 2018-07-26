@@ -57,6 +57,7 @@ export class ProductListController {
     @requestBody() menu: Menu
   ) {
 
+
     let foundProduct = await this.productRepo.findById(product_id)
 
     let createdMenu = await this.menuRepo.create({
@@ -121,6 +122,20 @@ export class ProductListController {
     return findMenu;
   }
 
+
+  @get('/deletemenu')
+  async deleteMenu(
+    @param.query.number('menu_id') menu_id: number
+  ) {
+
+    return await this.menuRepo.deleteById(menu_id);
+  }
+
+
+
+
+
+
   @get('/productinfo')
   async getOneProduct(
     @param.query.number('product_id') product_id: number
@@ -165,4 +180,78 @@ export class ProductListController {
 
     return this.productArray
   }
+
+  @get('/changeproductpic')
+  async changeProductPic(
+    @param.query.string('url') downloadURL: string,
+    @param.query.string('productID') product_id: string,
+  ) {
+
+    return await this.productRepo.updateById(product_id, {
+      photo_url: downloadURL
+    });
+
+
+  }
+
+
+
+  @post('/updateproduct')
+  async updateProduct(
+    @param.query.string('productid') product_id: string,
+    @requestBody() product: Product
+  ): Promise<Product> {
+
+    if (product.name) {
+
+      await this.productRepo.updateById(product_id, {
+        name: product.name
+      });
+
+    }
+
+    if (product.description) {
+
+      await this.productRepo.updateById(product_id, {
+        description: product.description
+      });
+
+    }
+
+    if (product.category_id) {
+
+      await this.productRepo.updateById(product_id, {
+        category_id: product.category_id
+      });
+
+    }
+
+
+    return await this.productRepo.findById(product_id);
+
+  }
+
+
+  @get('/deleteproduct')
+  async deleteProduct(
+    @param.query.number('productid') product_id: number
+  ) {
+
+    let menus: Menu[] = await this.menuRepo.find({
+      where: {
+        product_id: product_id
+      }
+
+    }) as Menu[];
+
+    for (let i = 0; i < menus.length; ++i) {
+      await this.menuRepo.delete(menus[i]);
+    }
+
+
+    return await this.productRepo.deleteById(product_id);
+
+  }
+
 }
+
