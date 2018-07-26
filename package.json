@@ -33,7 +33,7 @@
     "start": "node .",
     "prepublishOnly": "npm run test",
     "live": "db-migrate up && node .",
-    "erich": "export DB_HOST=localhost && export DB_PORT=3306 && export DB_USER=root && export DB_PASSWORD= && export DB_DATABASE=localhost-api && npm start",
+    "erich": " export NODE_PATH='/usr/local/lib/node_modules' && export DB_HOST=localhost && export DB_PORT=3306 && export DB_USER=root && export DB_PASSWORD= && export DB_DATABASE=localhost-api && npm start",
     "miki": "export DB_HOST=ix-fs-1.ce5d5ftkvwyr.eu-west-1.rds.amazonaws.com && export DB_PORT=3306 && export DB_USER=ix_fs_1 && export DB_PASSWORD=ixperience2018 && export DB_DATABASE=localhost && npm start"
   },
   "repository": {

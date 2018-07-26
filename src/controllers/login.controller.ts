@@ -16,9 +16,9 @@ export class LoginController {
   ) { }
 
   @get('/verify')
-  verifyToken(@param.query.string('jwt') jwt: string) {
+  async verifyToken(@param.query.string('jwt') jwt: string) {
     try {
-      let payload = verify(jwt, 'shh');
+      let payload = await verify(jwt, 'shh');
       return payload;
     } catch (err) {
       throw new HttpErrors.Unauthorized("Invalid token")

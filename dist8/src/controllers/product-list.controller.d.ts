@@ -16,7 +16,11 @@ export declare class ProductListController {
     getAllMenuItems(product_id: number): Promise<Array<Menu>>;
     getProductByLocation(locationName: string): Promise<Array<Product>>;
     getOneMenu(menu_id: number): Promise<Menu>;
+    deleteMenu(menu_id: number): Promise<boolean>;
     getOneProduct(product_id: number): Promise<Product>;
     getUserProducts(user_id: number): Promise<Array<Product>>;
     getBoughtProducts(user_id: number): Promise<Array<Product>>;
+    changeProductPic(downloadURL: string, product_id: string): Promise<boolean>;
+    updateProduct(product_id: string, product: Product): Promise<Product>;
+    deleteProduct(product_id: number): Promise<boolean>;
 }
