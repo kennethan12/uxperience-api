@@ -133,9 +133,6 @@ export class ProductListController {
 
 
 
-
-
-
   @get('/productinfo')
   async getOneProduct(
     @param.query.number('product_id') product_id: number
@@ -251,6 +248,20 @@ export class ProductListController {
 
     return await this.productRepo.deleteById(product_id);
 
+  }
+
+  @get('/history')
+  async history(
+    @param.query.number('transaction_id') transaction_id: number
+  ) {
+    let foundTransaction = await this.transactionRepo.findById(transaction_id)
+    let foundMenu = await this.menuRepo.findById(foundTransaction.menu_id);
+    let foundProduct = await this.productRepo.findById(foundMenu.product_id)
+
+    return {
+      menu: foundMenu,
+      product: foundProduct
+    };
   }
 
 }

@@ -32,6 +32,7 @@ exports.up = function (db, callback) {
     },
     customer_token: {
       type: 'string',
+      length: 4069,
       notNull: true
     },
     customer_id: {

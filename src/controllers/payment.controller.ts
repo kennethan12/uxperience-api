@@ -1,6 +1,6 @@
 import { TransactionRepository } from "../repositories/transaction.repository";
 import { repository } from "@loopback/repository";
-import { post, requestBody, param, HttpErrors } from "@loopback/rest";
+import { post, requestBody, param, HttpErrors, get } from "@loopback/rest";
 import { Transaction } from "../models/transaction";
 import { UserRepository } from "../repositories/user.repository";
 import { MenuRepository } from "../repositories/menu.repository";
@@ -79,4 +79,26 @@ export class PaymentController {
   }
 
   // retrieve a charge (get method)
+  @get('/gettransactions')
+  async getTransactions(
+    @param.query.string('jwt') jwt: string
+  ): Promise<Array<Transaction>> {
+
+    /* tslint:disable no-any */
+    let user = null
+    try {
+      let payload = verify(jwt, 'shh') as any;
+      user = payload.user;
+    } catch (err) {
+      throw new HttpErrors.Unauthorized("Invalid token")
+    }
+
+    let foundTransactions = await this.transactionRepo.find({
+      where: {
+        customer_id: user.user_id
+      }
+    })
+
+    return foundTransactions
+  }
 }

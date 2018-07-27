@@ -23,4 +23,8 @@ export declare class ProductListController {
     changeProductPic(downloadURL: string, product_id: string): Promise<boolean>;
     updateProduct(product_id: string, product: Product): Promise<Product>;
     deleteProduct(product_id: number): Promise<boolean>;
+    history(transaction_id: number): Promise<{
+        menu: Menu;
+        product: Product;
+    }>;
 }

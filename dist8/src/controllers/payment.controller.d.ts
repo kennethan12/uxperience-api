@@ -11,4 +11,5 @@ export declare class PaymentController {
     protected productRepo: ProductRepository;
     constructor(transactionRepo: TransactionRepository, userRepo: UserRepository, menuRepo: MenuRepository, productRepo: ProductRepository);
     makePayment(jwt: string, menu_id: number, paymentRequest: PaymentRequest): Promise<Transaction>;
+    getTransactions(jwt: string): Promise<Array<Transaction>>;
 }
