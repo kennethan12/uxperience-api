@@ -68,6 +68,24 @@ let PaymentController = class PaymentController {
             throw new rest_1.HttpErrors.BadRequest("Charge failed");
         }
     }
+    // retrieve a charge (get method)
+    async getTransactions(jwt) {
+        /* tslint:disable no-any */
+        let user = null;
+        try {
+            let payload = jsonwebtoken_1.verify(jwt, 'shh');
+            user = payload.user;
+        }
+        catch (err) {
+            throw new rest_1.HttpErrors.Unauthorized("Invalid token");
+        }
+        let foundTransactions = await this.transactionRepo.find({
+            where: {
+                customer_id: user.user_id
+            }
+        });
+        return foundTransactions;
+    }
 };
 __decorate([
     rest_1.post('/payments'),
@@ -78,6 +96,13 @@ __decorate([
     __metadata("design:paramtypes", [String, Number, payment_request_1.PaymentRequest]),
     __metadata("design:returntype", Promise)
 ], PaymentController.prototype, "makePayment", null);
+__decorate([
+    rest_1.get('/gettransactions'),
+    __param(0, rest_1.param.query.string('jwt')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], PaymentController.prototype, "getTransactions", null);
 PaymentController = __decorate([
     __param(0, repository_1.repository(transaction_repository_1.TransactionRepository.name)),
     __param(1, repository_1.repository(user_repository_1.UserRepository.name)),

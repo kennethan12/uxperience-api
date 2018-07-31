@@ -151,6 +151,15 @@ let ProductListController = class ProductListController {
         }
         return await this.productRepo.deleteById(product_id);
     }
+    async history(transaction_id) {
+        let foundTransaction = await this.transactionRepo.findById(transaction_id);
+        let foundMenu = await this.menuRepo.findById(foundTransaction.menu_id);
+        let foundProduct = await this.productRepo.findById(foundMenu.product_id);
+        return {
+            menu: foundMenu,
+            product: foundProduct
+        };
+    }
 };
 __decorate([
     rest_1.post("/addproduct"),
@@ -246,6 +255,13 @@ __decorate([
     __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", Promise)
 ], ProductListController.prototype, "deleteProduct", null);
+__decorate([
+    rest_1.get('/history'),
+    __param(0, rest_1.param.query.number('transaction_id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number]),
+    __metadata("design:returntype", Promise)
+], ProductListController.prototype, "history", null);
 ProductListController = __decorate([
     __param(0, repository_1.repository(product_repository_1.ProductRepository.name)),
     __param(1, repository_1.repository(menu_repository_1.MenuRepository.name)),
